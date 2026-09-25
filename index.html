@@ -1,0 +1,2221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>BHONDU — an unfinished archive</title>
+  <meta name="description" content="Some things were never meant to fit inside a message.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="paper-bg">
+
+  <!-- Subtle Film Grain / Paper Texture -->
+  <div class="paper-texture-overlay" aria-hidden="true"></div>
+
+  <!-- Falling Petals Container -->
+  <div id="petals-container" aria-hidden="true"></div>
+
+  <!-- Ambient Audio Track (Plays Maafi on enter / click) -->
+  <audio id="ambient-audio" loop preload="auto">
+    <source src="audio/music.mp3" type="audio/mpeg">
+    <source src="audio/vidssave.com%20Kabhi%20Kisi%20Se%20Maafi%20Maang%20Lo%20(Lyrics)%20Maafi%20-%20Shreya%20Ghoshal%20128KBPS.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Sticky Top Header & Page Navigation -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="nav-left">
+        <div class="chapter-tracker" id="chapter-tracker" aria-live="polite">
+          <span class="tracker-num" id="current-chapter-num">00 / 14</span>
+          <span class="tracker-title" id="current-chapter-title">COVER</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Minimal Table of Contents Toggle -->
+        <button class="icon-btn toc-toggle" id="toc-toggle" aria-label="Toggle Table of Contents" aria-expanded="false">
+          <span class="btn-text">INDEX</span>
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <line x1="4" y1="7" x2="20" y2="7"></line>
+            <line x1="4" y1="12" x2="16" y2="12"></line>
+            <line x1="4" y1="17" x2="20" y2="17"></line>
+          </svg>
+        </button>
+
+        <!-- Ambient Sound Control -->
+        <button class="sound-toggle" id="sound-toggle" aria-label="Toggle ambient music" title="Toggle ambient sound">
+          <span class="sound-icon">♪</span>
+          <span class="sound-state" id="sound-state">OFF</span>
+        </button>
+      </div>
+    </div>
+    <div class="header-progress-bar" id="header-progress-bar"></div>
+  </header>
+
+  <!-- Table of Contents Slide-Out / Drawer -->
+  <nav class="toc-drawer" id="toc-drawer" aria-label="Archive Directory" aria-hidden="true">
+    <div class="toc-header">
+      <span class="mono-meta">ARCHIVE DIRECTORY</span>
+      <button class="icon-btn close-btn" id="toc-close" aria-label="Close directory">×</button>
+    </div>
+    <div class="toc-identity">
+      <span class="toc-logo">BHONDU</span>
+      <span class="toc-sub">an unfinished archive · J × B</span>
+    </div>
+    <ol class="toc-list">
+      <li><button class="toc-btn-link" onclick="goToPage(0)"><span class="toc-num">00</span> Cover</button></li>
+      <li><button class="toc-btn-link" onclick="goToPage(1)"><span class="toc-num">01</span> A Note Before You Start</button></li>
+      <li><button class="toc-btn-link" onclick="goToPage(2)"><span class="toc-num">02</span> The Little Things</button></li>
+      <li><button class="toc-btn-link" onclick="goToPage(3)"><span class="toc-num">03</span> You Became Home</button></li>
+      <li><button class="toc-btn-link" onclick="goToPage(4)"><span class="toc-num">04</span> I Wasn't Perfect</button></li>
+      <li><button class="toc-btn-link" onclick="goToPage(5)"><span class="toc-num">05</span> What Actually Hurt</button></li>
+      <li><button class="toc-btn-link" onclick="goToPage(6)"><span class="toc-num">06</span> The Things I Never Wanted</button></li>
+      <li><button class="toc-btn-link" onclick="goToPage(7)"><span class="toc-num">07</span> Voice Notes</button></li>
+      <li><button class="toc-btn-link" onclick="goToPage(8)"><span class="toc-num">08</span> What We Imagined</button></li>
+      <li><button class="toc-btn-link" onclick="goToPage(9)"><span class="toc-num">09</span> The Last Page</button></li>
+      <li><button class="toc-btn-link" onclick="goToPage(10)"><span class="toc-num">10</span> Question Archive</button></li>
+      <li><button class="toc-btn-link" onclick="goToPage(12)"><span class="toc-num">12</span> A Tiny Bloom</button></li>
+      <li><button class="toc-btn-link" onclick="goToPage(13)"><span class="toc-num">13</span> Twilight Confession</button></li>
+      <li><button class="toc-btn-link" onclick="goToPage(14)"><span class="toc-num">14</span> Before You Go…</button></li>
+    </ol>
+  </nav>
+  <div class="drawer-backdrop" id="drawer-backdrop" aria-hidden="true"></div>
+
+  <!-- Main Multi-Page App Container -->
+  <main id="app">
+
+    <!-- ==========================================
+         PAGE 0: COVER / ENVELOPE OPENING
+         ========================================== -->
+    <section id="page-0" class="page active cover-page">
+      <!-- Romantic Light Doodles -->
+      <svg class="doodle doodle-sparkles" style="top: 12%; left: 8%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 Q20 20 36 20 Q20 20 20 36 Q20 20 4 20 Q20 20 20 4 Z" fill="rgba(232, 201, 204, 0.3)" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="32" cy="30" r="1.2" fill="currentColor"/></svg>
+      <svg class="doodle doodle-candle" style="bottom: 12%; left: 7%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M14 26 C14 24 26 24 26 26 L26 54 C26 56 14 56 14 54 Z" stroke="currentColor" fill="none" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="20" cy="26" rx="6" ry="2" stroke="currentColor" fill="none" stroke-width="1.2"/><path d="M20 24 L20 18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M20 18 C17 14 17 8 20 5 C23 8 23 14 20 18 Z" fill="rgba(242, 199, 121, 0.45)" stroke="#C29D45" stroke-width="1.2"/><path d="M12 36 Q10 40 12 44" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/></svg>
+      <svg class="doodle doodle-flower" style="bottom: 10%; right: 7%;" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="4.5" fill="rgba(240, 225, 185, 0.5)" stroke="currentColor" stroke-width="1.2"/><path d="M25 20.5 C23 13 27 13 25 20.5 M29.5 25 C37 23 37 27 29.5 25 M25 29.5 C27 37 23 37 25 29.5 M20.5 25 C13 27 13 23 20.5 25 M28.5 21.5 C35 16 32 13 28.5 21.5 M28.5 28.5 C35 34 32 37 28.5 28.5 M21.5 28.5 C15 34 18 37 21.5 28.5 M21.5 21.5 C15 16 18 13 21.5 21.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="rgba(232, 201, 204, 0.2)"/></svg>
+      <svg class="doodle doodle-tulip" style="top: 14%; right: 8%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M20 56 L20 32" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M20 44 Q28 40 32 30" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M20 32 C12 28 10 18 16 12 C18 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M20 32 C28 28 30 18 24 12 C22 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M16 16 C18 10 20 6 20 6 C20 6 22 10 24 16 Z" fill="rgba(185, 133, 140, 0.4)" stroke="currentColor" stroke-width="1.2"/></svg>
+      <svg class="doodle doodle-bow" style="top: 48%; left: 4%;" viewBox="0 0 50 35" aria-hidden="true"><ellipse cx="25" cy="14" rx="3.5" ry="3" fill="currentColor"/><path d="M21 14 C12 6 6 12 12 18 C17 22 21 16 21 14 Z" stroke="currentColor" stroke-width="1.2" fill="rgba(232, 201, 204, 0.25)"/><path d="M29 14 C38 6 44 12 38 18 C33 22 29 16 29 14 Z" stroke="currentColor" stroke-width="1.2" fill="rgba(232, 201, 204, 0.25)"/><path d="M23 17 Q17 26 14 30 M27 17 Q33 26 36 30" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <svg class="doodle doodle-heart" style="top: 44%; right: 5%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 33 C18 31 6 22 6 14 C6 8.5 10.5 5 15.5 5 C17.8 5 19.3 6.2 20 7.5 C20.7 6.2 22.2 5 24.5 5 C29.5 5 34 8.5 34 14 C34 22 22 31 20 33 Z" stroke="currentColor" stroke-width="1.3" fill="rgba(232, 201, 204, 0.25)" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg class="doodle doodle-stars" style="bottom: 30%; right: 6%;" viewBox="0 0 45 45" aria-hidden="true"><path d="M22 6 L24 16 L34 18 L24 20 L22 30 L20 20 L10 18 L20 16 Z" fill="rgba(242, 199, 121, 0.35)" stroke="#C29D45" stroke-width="1.1"/><circle cx="36" cy="10" r="1.4" fill="currentColor"/><circle cx="10" cy="34" r="1.6" fill="currentColor"/></svg>
+
+      <div class="cover-container">
+        <!-- Interactive Wax Seal / Envelope Icon -->
+        <div class="envelope-interactive-wrap" onclick="openArchiveCover()">
+          <div class="botanical-ornament cover-flower" aria-hidden="true">
+            <svg viewBox="0 0 60 100" class="flower-svg" fill="none" stroke="currentColor">
+              <path d="M30,95 Q30,55 30,35" stroke-width="1.2" stroke-linecap="round"/>
+              <path d="M30,70 Q45,60 50,42 Q40,48 30,62" stroke-width="1" fill="rgba(232, 201, 204, 0.25)"/>
+              <path d="M30,58 Q15,48 10,32 Q20,38 30,50" stroke-width="1" fill="rgba(232, 201, 204, 0.25)"/>
+              <path d="M30,35 C20,32 15,22 22,8 C27,15 30,22 30,35 Z" stroke-width="1.2" fill="rgba(185, 133, 140, 0.3)"/>
+              <path d="M30,35 C40,32 45,22 38,8 C33,15 30,22 30,35 Z" stroke-width="1.2" fill="rgba(185, 133, 140, 0.3)"/>
+              <path d="M25,25 C26,12 30,4 30,4 C30,4 34,12 35,25 Z" stroke-width="1.2" fill="rgba(232, 201, 204, 0.45)"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="cover-content">
+          <div class="cover-brand">
+            <span class="archive-stamp">ARCHIVE · 00</span>
+            <h1 class="cover-title">BHONDU</h1>
+            <p class="cover-subtitle">an unfinished archive</p>
+            <div class="cover-tag">J × B</div>
+          </div>
+
+          <div class="cover-divider" aria-hidden="true">
+            <span class="line"></span>
+            <span class="diamond">✧</span>
+            <span class="line"></span>
+          </div>
+
+          <blockquote class="cover-quote">
+            <p>“Some things were never meant to fit inside a message.”</p>
+          </blockquote>
+
+          <div class="cover-cta">
+            <button class="enter-btn" id="enter-btn" onclick="openArchiveCover()">
+              ENTER ARCHIVE <span class="arrow">→</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="cover-footer-note">
+          <span class="mono-meta">FOR BHONDU · KEPT SAFE HERE</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PAGE 1: 01 — A NOTE BEFORE YOU START
+         ========================================== -->
+    <section id="page-1" class="page note-page-1">
+      <div class="note-container">
+        
+        <!-- Section label / Archive metadata -->
+        <div class="note-meta-header">
+          <span class="note-meta-label">01 / A NOTE BEFORE YOU START</span>
+          <span class="note-meta-tag">ARCHIVE NOTE</span>
+        </div>
+
+        <!-- Main Heading -->
+        <header class="note-heading-block">
+          <h1 class="note-main-heading">
+            Before you read this,<br>
+            I want you to know one thing.
+          </h1>
+        </header>
+
+        <!-- Body Copy in Deliberate Editorial Groups -->
+        <div class="note-body-flow">
+          
+          <!-- Group 01 -->
+          <div class="note-group note-group-01">
+            <p>This isn't an attempt to rewrite what happened between us.</p>
+            <p>It isn't here to prove that everything was perfect.</p>
+            <p>And it isn't here to convince you of anything.</p>
+          </div>
+
+          <!-- Tiny subtle margin annotation -->
+          <div class="note-margin-note" aria-hidden="true">
+            <span class="note-pencil-text">some things are easier to write</span>
+          </div>
+
+          <!-- Group 02 -->
+          <div class="note-group note-group-02">
+            <p>There were just too many things I never found the right words for.</p>
+            <p>Some things I understood too late.</p>
+            <p>Some things I couldn't say without getting emotional.</p>
+            <p>And some things were easier to write than to say out loud.</p>
+          </div>
+
+          <!-- Group 03 -->
+          <div class="note-emphasis-statement">
+            <p>So I put them here.</p>
+          </div>
+
+          <!-- Group 04 -->
+          <div class="note-group note-group-04">
+            <p>Not as a perfect story.</p>
+            <p>Not as a story where either of us was always right.</p>
+          </div>
+
+          <!-- Group 05 -->
+          <div class="note-emphasis-sub">
+            <p>Just as I remember it.</p>
+          </div>
+
+          <!-- Group 06 (Short Stacked Fragments) -->
+          <div class="note-fragments-stack">
+            <span class="note-fragment">The good.</span>
+            <span class="note-fragment">The difficult.</span>
+            <span class="note-fragment">The beautiful.</span>
+            <span class="note-fragment">The things I got wrong.</span>
+            <span class="note-fragment note-fragment-closing">And everything that existed somewhere between them.</span>
+          </div>
+
+        </div>
+
+        <!-- J × B Signature -->
+        <footer class="note-footer-signature">
+          <div class="note-sig-block">
+            <span class="note-sig-names">J × B</span>
+            <span class="note-sig-sub">AN UNFINISHED ARCHIVE</span>
+          </div>
+        </footer>
+
+        <!-- Action / Navigation -->
+        <div class="note-action-wrap">
+          <button class="page-continue-btn note-begin-btn" onclick="goToPage(2)">
+            continue: the little things <span class="arrow">→</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PAGE 2: 02 — THE LITTLE THINGS
+         ========================================== -->
+    <section id="page-2" class="page">
+      <svg class="doodle doodle-cup" style="top: 6%; right: 4%;" viewBox="0 0 50 50" aria-hidden="true"><path d="M12 20 L15 42 C15 45 35 45 35 42 L38 20 Z" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linejoin="round"/><path d="M37 24 C43 24 43 34 36 34" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/><path d="M22 14 Q20 10 22 6 M28 14 Q30 10 28 6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" fill="none"/><ellipse cx="25" cy="20" rx="13" ry="2.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+      <svg class="doodle doodle-bow" style="bottom: 8%; left: 3%;" viewBox="0 0 50 35" aria-hidden="true"><ellipse cx="25" cy="14" rx="3.5" ry="3" fill="currentColor"/><path d="M21 14 C12 6 6 12 12 18 C17 22 21 16 21 14 Z" stroke="currentColor" stroke-width="1.2" fill="rgba(232, 201, 204, 0.25)"/><path d="M29 14 C38 6 44 12 38 18 C33 22 29 16 29 14 Z" stroke="currentColor" stroke-width="1.2" fill="rgba(232, 201, 204, 0.25)"/><path d="M23 17 Q17 26 14 30 M27 17 Q33 26 36 30" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <svg class="doodle doodle-sparkles" style="top: 15%; left: 4%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 Q20 20 36 20 Q20 20 20 36 Q20 20 4 20 Q20 20 20 4 Z" fill="rgba(232, 201, 204, 0.3)" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="32" cy="30" r="1.2" fill="currentColor"/></svg>
+      <svg class="doodle doodle-tulip" style="top: 45%; left: 3%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M20 56 L20 32" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M20 44 Q28 40 32 30" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M20 32 C12 28 10 18 16 12 C18 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M20 32 C28 28 30 18 24 12 C22 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M16 16 C18 10 20 6 20 6 C20 6 22 10 24 16 Z" fill="rgba(185, 133, 140, 0.4)" stroke="currentColor" stroke-width="1.2"/></svg>
+      <svg class="doodle doodle-candle" style="top: 50%; right: 4%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M14 26 C14 24 26 24 26 26 L26 54 C26 56 14 56 14 54 Z" stroke="currentColor" fill="none" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="20" cy="26" rx="6" ry="2" stroke="currentColor" fill="none" stroke-width="1.2"/><path d="M20 24 L20 18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M20 18 C17 14 17 8 20 5 C23 8 23 14 20 18 Z" fill="rgba(242, 199, 121, 0.45)" stroke="#C29D45" stroke-width="1.2"/><path d="M12 36 Q10 40 12 44" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/></svg>
+      <svg class="doodle doodle-daisy" style="bottom: 22%; right: 4%;" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="5" fill="rgba(242, 199, 121, 0.5)" stroke="currentColor" stroke-width="1.1"/><path d="M25 15 C23 10 27 10 25 15 M35 25 C40 23 40 27 35 25 M25 35 C27 40 23 40 25 35 M15 25 C10 27 10 23 15 25" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <svg class="doodle doodle-heart" style="bottom: 12%; left: 4%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 33 C18 31 6 22 6 14 C6 8.5 10.5 5 15.5 5 C17.8 5 19.3 6.2 20 7.5 C20.7 6.2 22.2 5 24.5 5 C29.5 5 34 8.5 34 14 C34 22 22 31 20 33 Z" stroke="currentColor" stroke-width="1.3" fill="rgba(232, 201, 204, 0.25)" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+      <div class="section-container">
+        <header class="section-header">
+          <span class="chapter-mono">02 — THE LITTLE THINGS</span>
+          <h2 class="section-title">Little Things which are big for me.</h2>
+          <p class="section-intro">The quiet moments, inside memories, and gentle gestures that became the most sacred parts of us.</p>
+        </header>
+
+        <div class="little-things-grid">
+          <!-- Card 1: Good Morning & Good Night Messages (Tilted Left) -->
+          <article class="memory-card" style="--rotation: -2.5deg;">
+            <div class="polaroid-corner-heart" aria-hidden="true" title="treasured with love">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <div class="tape-strip tape-center" aria-hidden="true"></div>
+            <div class="memory-card-header">
+              <span class="card-id mono-meta">ENTRY 021</span>
+              <span class="card-category">DAILY WARMTH</span>
+            </div>
+            <div class="memory-card-body">
+              <h3 class="memory-heading">Your good morning and good night messages every day</h3>
+              <p class="memory-desc">Starting my day with your “good morning” and closing my eyes to your “good night”—those simple words made every ordinary day feel anchored and safe. You have no idea how much warmth a single message from you carried.</p>
+            </div>
+            <div class="memory-card-footer">
+              <span class="mono-meta">[EVERY SINGLE DAY]</span>
+              <span class="card-tag">#alwayswithme</span>
+            </div>
+          </article>
+
+          <!-- Card 2: Our First Food Date (Tilted Right) -->
+          <article class="memory-card" style="--rotation: 2.5deg;">
+            <div class="polaroid-corner-heart" aria-hidden="true" title="treasured with love">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <div class="tape-strip tape-center" aria-hidden="true"></div>
+            <div class="memory-card-header">
+              <span class="card-id mono-meta">ENTRY 022</span>
+              <span class="card-category">FAVORITE MEMORY</span>
+            </div>
+            <div class="memory-card-body">
+              <h3 class="memory-heading">Our first food date</h3>
+              <p class="memory-desc">We enjoyed the food, talked for hours, and laughed so much together. But what melted my heart completely was seeing your beautiful smile and that pure, sweet excitement on your face when you shared your food with me. It truly is one of my favorite days ever.</p>
+            </div>
+            <div class="memory-card-footer">
+              <span class="mono-meta">[THE BEST AFTERNOON]</span>
+              <span class="card-tag">#favoriteday</span>
+            </div>
+          </article>
+
+          <!-- Card 3: Our First Hug (Under Card 1, Tilted Left) -->
+          <article class="memory-card" style="--rotation: -1.8deg;">
+            <div class="polaroid-corner-heart" aria-hidden="true" title="treasured with love">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <div class="tape-strip tape-center" aria-hidden="true"></div>
+            <div class="memory-card-header">
+              <span class="card-id mono-meta">ENTRY 023</span>
+              <span class="card-category">WORTH EVERY SECOND</span>
+            </div>
+            <div class="memory-card-body">
+              <h3 class="memory-heading">Our first hug</h3>
+              <p class="memory-desc">I stayed awake the entire night working to finish that post for you without a single minute of sleep. But the second you wrapped your arms around me, all the exhaustion melted away. That hug felt like finally coming home... and honestly, it was worth staying up a thousand nights for.</p>
+            </div>
+            <div class="memory-card-footer">
+              <span class="mono-meta">[HEART MELTED]</span>
+              <span class="card-tag">#worthitall</span>
+            </div>
+          </article>
+
+          <!-- Card 4: Your Gifts (Beside Card 3, Tilted Right) -->
+          <article class="memory-card" style="--rotation: 2.2deg;">
+            <div class="polaroid-corner-heart" aria-hidden="true" title="treasured with love">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <div class="tape-strip tape-center" aria-hidden="true"></div>
+            <div class="memory-card-header">
+              <span class="card-id mono-meta">ENTRY 024</span>
+              <span class="card-category">TREASURED TOKENS</span>
+            </div>
+            <div class="memory-card-body">
+              <h3 class="memory-heading">Your gifts</h3>
+              <p class="memory-desc">Every little token, handwritten note, and thoughtful thing you ever handed me. I keep them safe not just on a shelf, but deeply in my heart—as proof of your gentle love and the care you gave so freely.</p>
+            </div>
+            <div class="memory-card-footer">
+              <span class="mono-meta">[FOREVER CHERISHED]</span>
+              <span class="card-tag">#keptsafe</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="page-nav-action">
+          <button class="page-continue-btn" onclick="goToPage(3)">
+            Continue: You Became Home →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PAGE 3: 03 — YOU BECAME HOME & GIFTS
+         ========================================== -->
+    <section id="page-3" class="page">
+      <svg class="doodle doodle-bow" style="top: 5%; left: 3%;" viewBox="0 0 50 35" aria-hidden="true"><ellipse cx="25" cy="14" rx="3.5" ry="3" fill="currentColor"/><path d="M21 14 C12 6 6 12 12 18 C17 22 21 16 21 14 Z" stroke="currentColor" stroke-width="1.2" fill="rgba(232, 201, 204, 0.25)"/><path d="M29 14 C38 6 44 12 38 18 C33 22 29 16 29 14 Z" stroke="currentColor" stroke-width="1.2" fill="rgba(232, 201, 204, 0.25)"/><path d="M23 17 Q17 26 14 30 M27 17 Q33 26 36 30" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <svg class="doodle doodle-candle" style="bottom: 8%; right: 4%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M14 26 C14 24 26 24 26 26 L26 54 C26 56 14 56 14 54 Z" stroke="currentColor" fill="none" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="20" cy="26" rx="6" ry="2" stroke="currentColor" fill="none" stroke-width="1.2"/><path d="M20 24 L20 18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M20 18 C17 14 17 8 20 5 C23 8 23 14 20 18 Z" fill="rgba(242, 199, 121, 0.45)" stroke="#C29D45" stroke-width="1.2"/><path d="M12 36 Q10 40 12 44" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/></svg>
+      <svg class="doodle doodle-flower" style="top: 12%; right: 5%;" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="4.5" fill="rgba(240, 225, 185, 0.5)" stroke="currentColor" stroke-width="1.2"/><path d="M25 20.5 C23 13 27 13 25 20.5 M29.5 25 C37 23 37 27 29.5 25 M25 29.5 C27 37 23 37 25 29.5 M20.5 25 C13 27 13 23 20.5 25 M28.5 21.5 C35 16 32 13 28.5 21.5 M28.5 28.5 C35 34 32 37 28.5 28.5 M21.5 28.5 C15 34 18 37 21.5 28.5 M21.5 21.5 C15 16 18 13 21.5 21.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="rgba(232, 201, 204, 0.2)"/></svg>
+      <svg class="doodle doodle-sparkles" style="top: 25%; left: 4%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 Q20 20 36 20 Q20 20 20 36 Q20 20 4 20 Q20 20 20 4 Z" fill="rgba(232, 201, 204, 0.3)" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="32" cy="30" r="1.2" fill="currentColor"/></svg>
+      <svg class="doodle doodle-tulip" style="top: 48%; right: 4%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M20 56 L20 32" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M20 44 Q28 40 32 30" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M20 32 C12 28 10 18 16 12 C18 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M20 32 C28 28 30 18 24 12 C22 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M16 16 C18 10 20 6 20 6 C20 6 22 10 24 16 Z" fill="rgba(185, 133, 140, 0.4)" stroke="currentColor" stroke-width="1.2"/></svg>
+      <svg class="doodle doodle-heart" style="top: 60%; left: 4%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 33 C18 31 6 22 6 14 C6 8.5 10.5 5 15.5 5 C17.8 5 19.3 6.2 20 7.5 C20.7 6.2 22.2 5 24.5 5 C29.5 5 34 8.5 34 14 C34 22 22 31 20 33 Z" stroke="currentColor" stroke-width="1.3" fill="rgba(232, 201, 204, 0.25)" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg class="doodle doodle-sunflower" style="bottom: 12%; left: 4%;" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="7" fill="rgba(139, 94, 60, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M25 18 C23 10 27 10 25 18 M32 25 C40 23 40 27 32 25 M25 32 C27 40 23 40 25 32 M18 25 C10 27 10 23 18 25 M30 20 C37 14 34 11 30 20 M30 30 C37 36 34 39 30 30 M20 30 C13 36 16 39 20 30 M20 20 C13 14 16 11 20 20" stroke="#C29D45" stroke-width="1.3" stroke-linecap="round" fill="rgba(242, 199, 121, 0.3)"/></svg>
+
+      <div class="section-container">
+        <header class="section-header">
+          <span class="chapter-mono">03 — YOU BECAME HOME</span>
+          <h2 class="section-title">Somewhere along the way,<br>you became home.</h2>
+          <p class="section-intro">These are the things I remember. Not as a scoreboard, but as gratitude for the care you gave so freely.</p>
+        </header>
+
+        <div class="home-narrative">
+          <div class="home-paper-sheet">
+            <div class="sheet-margin"></div>
+            <div class="sheet-content">
+              <p class="lead-line">You made feeling cared for feel natural.</p>
+              <p>
+                In a world that is always loud and constantly moving, you became the quiet corner where I could put down everything I was carrying. You listened when I was confused. You noticed when my mood shifted without me having to announce it. You took care of me in ways that made me realize what gentle love felt like.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Her Websites / Creative Efforts & My-Bhondu Showcase -->
+        <div class="creations-showcase">
+          <div class="section-subhead">
+            <span class="mono-meta">ARCHIVE EXHIBIT · 031</span>
+            <h3>The websites & things you made</h3>
+            <p>You didn't have to make these. You did anyway.</p>
+          </div>
+
+          <div class="creations-grid">
+            <!-- Her Site 1: for-jaggu -->
+            <div class="exhibit-card" style="--rotation: -1.2deg;">
+              <div class="tape-strip tape-top-center" aria-hidden="true"></div>
+              <div class="exhibit-badge">YOUR CREATION</div>
+              <div class="exhibit-preview">
+                <div class="web-frame">
+                  <div class="browser-bar">
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                    <span class="url-text">bansiii8.github.io/for-jaggu/</span>
+                  </div>
+                  <div class="web-content-placeholder">
+                    <div class="site-name">for-jaggu</div>
+                    <span class="web-sub">[A WEBSITE YOU BUILT FOR ME]</span>
+                  </div>
+                </div>
+              </div>
+              <div class="exhibit-meta">
+                <h4 class="exhibit-title">for-jaggu</h4>
+                <p class="exhibit-desc">The thoughts and code you put together just to bring a smile. Saved in my heart forever.</p>
+                <a href="https://bansiii8.github.io/for-jaggu/" target="_blank" rel="noopener noreferrer" class="exhibit-link">
+                  Open Project ↗
+                </a>
+              </div>
+            </div>
+
+            <!-- Her Site 2: for-you -->
+            <div class="exhibit-card" style="--rotation: 1deg;">
+              <div class="tape-strip tape-top-center" aria-hidden="true"></div>
+              <div class="exhibit-badge">YOUR CREATION</div>
+              <div class="exhibit-preview">
+                <div class="web-frame">
+                  <div class="browser-bar">
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                    <span class="url-text">bansiii8.github.io/for-you/</span>
+                  </div>
+                  <div class="web-content-placeholder">
+                    <div class="site-name">for-you</div>
+                    <span class="web-sub">[ANOTHER SWEET EFFORT OF YOURS]</span>
+                  </div>
+                </div>
+              </div>
+              <div class="exhibit-meta">
+                <h4 class="exhibit-title">for-you</h4>
+                <p class="exhibit-desc">Every line of code you wrote was a reminder that you were thinking of me.</p>
+                <a href="https://bansiii8.github.io/for-you/" target="_blank" rel="noopener noreferrer" class="exhibit-link">
+                  Open Project ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- The Things She Gave To Me (Treasured Keepsakes - 4 Gifts) -->
+        <div class="gifts-showcase">
+          <div class="section-subhead">
+            <span class="mono-meta">TREASURED KEEPSAKES</span>
+            <h3>The things you gave me</h3>
+            <p>Every little thing you handed me became something I held onto.</p>
+          </div>
+
+          <div class="gifts-grid">
+            <!-- Gift 1: First Gift & First Letter (image1.png) -->
+            <div class="gift-card" style="--rotation: -2deg;">
+              <div class="polaroid-corner-heart" aria-hidden="true" title="treasured with love">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              </div>
+              <div class="tape-strip tape-center" aria-hidden="true"></div>
+              <div class="gift-photo-frame">
+                <img src="images/memories/image1.png" alt="First gift and letter from you" class="gift-img" loading="lazy">
+              </div>
+              <div class="gift-caption">
+                <span class="mono-meta">01 · FIRST GIFT & LETTER</span>
+                <h4 class="gift-title">The First Letter & The Flower</h4>
+                <p>This was my first gift and first letter from you, which is so much more special than anything because you gave it to me. And I still have that flower, you can see right there.</p>
+              </div>
+            </div>
+
+            <!-- Gift 2: Guardian Bell & Spider-Man (image2.jpeg) -->
+            <div class="gift-card" style="--rotation: 2deg;">
+              <div class="polaroid-corner-heart heart-left" aria-hidden="true" title="treasured with love">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              </div>
+              <div class="tape-strip tape-center" aria-hidden="true"></div>
+              <div class="gift-photo-frame">
+                <img src="images/memories/image2.jpeg" alt="Guardian bell and Spider-Man from you" class="gift-img" loading="lazy" onerror="this.onerror=null; this.src='images/memories/image2.jpg';">
+              </div>
+              <div class="gift-caption">
+                <span class="mono-meta">02 · GUARDIAN BELL & SPIDER-MAN</span>
+                <h4 class="gift-title">Protection & Little Smiles</h4>
+                <p>The first guardian bell that you gave me, and of course the cute Spider-Man. Every time I see them, they remind me of your care.</p>
+              </div>
+            </div>
+
+            <!-- Gift 3: Our First Friendship Card (image3.png) -->
+            <div class="gift-card" style="--rotation: -1.6deg;">
+              <div class="polaroid-corner-heart" aria-hidden="true" title="treasured with love">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              </div>
+              <div class="tape-strip tape-center" aria-hidden="true"></div>
+              <div class="gift-photo-frame">
+                <img src="images/memories/image3.png" alt="Our first friendship card" class="gift-img" loading="lazy">
+              </div>
+              <div class="gift-caption">
+                <span class="mono-meta">03 · OUR FIRST FRIENDSHIP CARD</span>
+                <h4 class="gift-title">“When Things Get Hard...”</h4>
+                <p>Our first friendship card that you made for us. This is truly special because it says <em>“when life gets hard, I'm just a call away & always here”</em>... and right now, it is.</p>
+              </div>
+            </div>
+
+            <!-- Gift 4: Kinder Joy & Empty Shell (image4.png) -->
+            <div class="gift-card" style="--rotation: 1.8deg;">
+              <div class="polaroid-corner-heart heart-left" aria-hidden="true" title="treasured with love">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              </div>
+              <div class="tape-strip tape-center" aria-hidden="true"></div>
+              <div class="gift-photo-frame">
+                <img src="images/memories/image4.png" alt="Kinder Joy surprise" class="gift-img" loading="lazy">
+              </div>
+              <div class="gift-caption">
+                <span class="mono-meta">04 · KINDER JOY SURPRISE</span>
+                <h4 class="gift-title">Sweetness Kept Forever</h4>
+                <p>The Kinder Joy that you gave me, and I still have that empty shell of the Kinder Joy too. Even the smallest token from you became a treasure.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-nav-action">
+          <button class="page-continue-btn" onclick="goToPage(4)">
+            Continue: Accountability →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PAGE 4: 04 — I KNOW I WASN'T PERFECT
+         ========================================== -->
+    <section id="page-4" class="page page-centered solemn-section">
+      <svg class="doodle doodle-flower" style="top: 8%; left: 4%;" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="4.5" fill="rgba(240, 225, 185, 0.5)" stroke="currentColor" stroke-width="1.2"/><path d="M25 20.5 C23 13 27 13 25 20.5 M29.5 25 C37 23 37 27 29.5 25 M25 29.5 C27 37 23 37 25 29.5 M20.5 25 C13 27 13 23 20.5 25 M28.5 21.5 C35 16 32 13 28.5 21.5 M28.5 28.5 C35 34 32 37 28.5 28.5 M21.5 28.5 C15 34 18 37 21.5 28.5 M21.5 21.5 C15 16 18 13 21.5 21.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="rgba(232, 201, 204, 0.2)"/></svg>
+      <svg class="doodle doodle-candle" style="bottom: 8%; right: 4%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M14 26 C14 24 26 24 26 26 L26 54 C26 56 14 56 14 54 Z" stroke="currentColor" fill="none" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="20" cy="26" rx="6" ry="2" stroke="currentColor" fill="none" stroke-width="1.2"/><path d="M20 24 L20 18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M20 18 C17 14 17 8 20 5 C23 8 23 14 20 18 Z" fill="rgba(242, 199, 121, 0.45)" stroke="#C29D45" stroke-width="1.2"/><path d="M12 36 Q10 40 12 44" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/></svg>
+      <svg class="doodle doodle-sparkles" style="bottom: 12%; left: 5%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 Q20 20 36 20 Q20 20 20 36 Q20 20 4 20 Q20 20 20 4 Z" fill="rgba(232, 201, 204, 0.3)" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="32" cy="30" r="1.2" fill="currentColor"/></svg>
+      <svg class="doodle doodle-tulip" style="top: 15%; right: 5%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M20 56 L20 32" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M20 44 Q28 40 32 30" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M20 32 C12 28 10 18 16 12 C18 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M20 32 C28 28 30 18 24 12 C22 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M16 16 C18 10 20 6 20 6 C20 6 22 10 24 16 Z" fill="rgba(185, 133, 140, 0.4)" stroke="currentColor" stroke-width="1.2"/></svg>
+      <svg class="doodle doodle-heart" style="top: 48%; right: 4%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 33 C18 31 6 22 6 14 C6 8.5 10.5 5 15.5 5 C17.8 5 19.3 6.2 20 7.5 C20.7 6.2 22.2 5 24.5 5 C29.5 5 34 8.5 34 14 C34 22 22 31 20 33 Z" stroke="currentColor" stroke-width="1.3" fill="rgba(232, 201, 204, 0.25)" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg class="doodle doodle-bow" style="top: 55%; left: 3%;" viewBox="0 0 50 35" aria-hidden="true"><ellipse cx="25" cy="14" rx="3.5" ry="3" fill="currentColor"/><path d="M21 14 C12 6 6 12 12 18 C17 22 21 16 21 14 Z" stroke="currentColor" stroke-width="1.2" fill="rgba(232, 201, 204, 0.25)"/><path d="M29 14 C38 6 44 12 38 18 C33 22 29 16 29 14 Z" stroke="currentColor" stroke-width="1.2" fill="rgba(232, 201, 204, 0.25)"/><path d="M23 17 Q17 26 14 30 M27 17 Q33 26 36 30" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <svg class="doodle doodle-leaves" style="bottom: 25%; right: 4%;" viewBox="0 0 45 45" aria-hidden="true"><path d="M8 38 Q22 24 38 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/><path d="M20 26 Q14 20 16 14 Q22 18 20 26 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.1"/><path d="M26 20 Q32 14 34 8 Q28 12 26 20 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.1"/><path d="M28 28 Q34 26 38 20 Q30 22 28 28 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.1"/></svg>
+
+      <div class="section-container narrow">
+        <header class="section-header">
+          <span class="chapter-mono">04 — I WASN'T PERFECT</span>
+          <h2 class="section-title">I know I wasn't perfect.</h2>
+          <p class="section-intro">And I don't want to pretend I was.</p>
+        </header>
+
+        <!-- Accountability Card with Exact Approved Wording -->
+        <div class="accountability-box">
+          <div class="wax-seal-ornament" aria-hidden="true">
+            <span class="seal-letter">jaggu</span>
+          </div>
+
+          <!-- Opening Reflection -->
+          <div class="acc-lead-wrap">
+            <p class="acc-lead">
+              There were moments when I handled things badly. Moments when my emotions got louder than my understanding. Moments when I said things the wrong way, reacted too quickly, or failed to understand what you were trying to tell me.
+            </p>
+          </div>
+
+          <div class="acc-divider" aria-hidden="true">
+            <span class="acc-divider-icon">✦</span>
+          </div>
+
+          <!-- Personal Confession -->
+          <div class="acc-section acc-personal-section">
+            <h3 class="acc-personal-title">I know I hurt you sometimes.</h3>
+            <p class="acc-subhead">I know there were times when I made you feel unheard, uncomfortable, or disappointed.</p>
+            
+            <div class="acc-staccato-list">
+              <div class="acc-staccato-item">I shouted when I shouldn't have.</div>
+              <div class="acc-staccato-item">I reacted when I should have listened.</div>
+              <div class="acc-staccato-item">I let my own hurt become bigger than the moment itself.</div>
+            </div>
+
+            <p class="acc-solemn-note">And none of that becomes okay just because I had reasons behind it.</p>
+          </div>
+
+          <!-- The Important Part / Core Realization -->
+          <div class="acc-core-card">
+            <h3 class="acc-core-title">I'm not writing this so you can forgive me.</h3>
+            <p class="acc-core-desc">
+              I'm writing it because I finally understand that explaining why I did something doesn't erase what it made you feel.
+            </p>
+
+            <div class="acc-triad-grid">
+              <div class="triad-item">I can have my reasons and still be wrong.</div>
+              <div class="triad-item">I can be hurt and still have handled it badly.</div>
+              <div class="triad-item">I can love someone deeply and still make mistakes that hurt them.</div>
+            </div>
+          </div>
+
+          <!-- Finish Quietly / Growth & Promise -->
+          <div class="acc-quiet-block">
+            <p class="acc-quiet-p">I'm not proud of every version of myself you had to experience.</p>
+            <p class="acc-quiet-p">But I am grateful that knowing you made me look at those parts of myself.</p>
+            
+            <p class="acc-mistakes-intro">And if there is one thing I want you to know about my mistakes, it's this:</p>
+
+            <div class="acc-affirmations">
+              <span class="affirmation-pill">I see them.</span>
+              <span class="affirmation-pill">I own them.</span>
+            </div>
+
+            <p class="acc-closing-pledge">
+              And I want to become better than the person cause if can change for you i'll be the trying person for you.
+            </p>
+          </div>
+
+          <div class="accountability-foot">
+            <span class="mono-meta">NO DEFENSES · NO EXCUSES · GENUINELY LEARNING</span>
+          </div>
+        </div>
+
+        <div class="page-nav-action">
+          <button class="page-continue-btn" onclick="goToPage(5)">
+            Continue: What Actually Hurt →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PAGE 5: 05 — WHAT ACTUALLY HURT (EDITORIAL COMPOSITION)
+         ========================================== -->
+    <section id="page-5" class="page solemn-section dark-paper editorial-page-5">
+      <!-- Intentionally distributed subtle archive doodles -->
+      <svg class="doodle doodle-sparkles" style="top: 6%; right: 7%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 Q20 20 36 20 Q20 20 20 36 Q20 20 4 20 Q20 20 20 4 Z" fill="rgba(232, 201, 204, 0.25)" stroke="#C48B92" stroke-width="1.1"/><circle cx="8" cy="8" r="1.2" fill="currentColor"/><circle cx="32" cy="30" r="1" fill="currentColor"/></svg>
+      <svg class="doodle doodle-candle" style="top: 28%; left: 3%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M14 26 C14 24 26 24 26 26 L26 54 C26 56 14 56 14 54 Z" stroke="#8E857E" fill="none" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="20" cy="26" rx="6" ry="2" stroke="#8E857E" fill="none" stroke-width="1.1"/><path d="M20 24 L20 18" stroke="#8E857E" stroke-width="1.3" stroke-linecap="round"/><path d="M20 18 C17 14 17 8 20 5 C23 8 23 14 20 18 Z" fill="rgba(242, 199, 121, 0.35)" stroke="#C29D45" stroke-width="1.1"/><path d="M12 36 Q10 40 12 44" stroke="#8E857E" stroke-width="1.1" stroke-linecap="round" fill="none"/></svg>
+      <svg class="doodle doodle-tulip" style="top: 62%; right: 3%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M20 56 L20 32" stroke="#8E857E" stroke-width="1.3" stroke-linecap="round"/><path d="M20 44 Q28 40 32 30" stroke="#8E857E" stroke-width="1.1" fill="none"/><path d="M20 32 C12 28 10 18 16 12 C18 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.2)" stroke="#C48B92" stroke-width="1.1"/><path d="M20 32 C28 28 30 18 24 12 C22 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.2)" stroke="#C48B92" stroke-width="1.1"/><path d="M16 16 C18 10 20 6 20 6 C20 6 22 10 24 16 Z" fill="rgba(185, 133, 140, 0.3)" stroke="#C48B92" stroke-width="1.1"/></svg>
+      <svg class="doodle doodle-leaves" style="bottom: 12%; left: 4%;" viewBox="0 0 45 45" aria-hidden="true"><path d="M8 38 Q22 24 38 8" stroke="#8E857E" stroke-width="1.2" stroke-linecap="round" fill="none"/><path d="M20 26 Q14 20 16 14 Q22 18 20 26 Z" fill="rgba(232, 201, 204, 0.2)" stroke="#C48B92" stroke-width="1"/><path d="M26 20 Q32 14 34 8 Q28 12 26 20 Z" fill="rgba(232, 201, 204, 0.2)" stroke="#C48B92" stroke-width="1"/></svg>
+
+      <div class="editorial-container">
+
+        <!-- 2. HERO AREA (Upper Viewport, Asymmetrical / Horizontally Offset) -->
+        <header class="editorial-hero">
+          <div class="archive-kicker mono-meta">
+            <span>ARCHIVE 05</span>
+            <span class="kicker-sep">/</span>
+            <span>WHAT ACTUALLY HURT</span>
+          </div>
+          <h2 class="editorial-main-heading">WHAT ACTUALLY HURT</h2>
+          <p class="editorial-hook">“There were things I never knew how to say.”</p>
+          
+          <!-- 3. SMALL ARCHIVE ANNOTATION -->
+          <aside class="marginal-annotation" aria-hidden="true">
+            <span class="annotation-text">some things stayed.</span>
+          </aside>
+        </header>
+
+        <!-- 4. NO IMAGE PLACEHOLDER: Clean open visual breathing space -->
+
+        <!-- 5. THE POEM / CONFESSION (Free-Floating Editorial Text on Page) -->
+        <div class="editorial-confession-stream">
+          <p class="confession-line-quiet">No, I don't want your time.</p>
+
+          <p class="confession-line-spacious">
+            I just want to feel like those days when you used to tell me that I was yours, and you meant it.
+          </p>
+
+          <p class="confession-line">
+            I know I don't always believe in myself. So losing you wouldn't just mean losing a lover. It would mean losing the one person with whom I felt completely like myself — and losing the part of me I thought no longer existed, the part of me that you helped me discover.
+          </p>
+
+          <p class="confession-line-prominent">
+            I became used to living a life that had you in it.
+          </p>
+        </div>
+
+        <!-- 7. LEGO METAPHOR — THE VISUAL CENTERPIECE -->
+        <div class="lego-centerpiece-section">
+          <div class="lego-thin-rule" aria-hidden="true">────────────────</div>
+
+          <div class="lego-metaphor-grid">
+            <blockquote class="lego-metaphor-quote">
+              “And now it feels like your life is a Lego set that keeps growing into something beautiful, while I'm just <span class="lego-detached-phrase">the piece that no longer fits</span>.”
+            </blockquote>
+
+            <!-- 8. MINIMALIST MONOCHROME LEGO DETAIL -->
+            <div class="lego-minimalist-visual" aria-hidden="true" title="the piece that no longer fits">
+              <svg viewBox="0 0 160 85" class="lego-blocks-svg" fill="none">
+                <!-- Connected blocks (subtle archive lines) -->
+                <rect x="12" y="46" width="36" height="24" rx="2" stroke="#8E857E" stroke-width="1.3" fill="rgba(255,255,255,0.02)"/>
+                <line x1="20" y1="42" x2="26" y2="42" stroke="#8E857E" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="34" y1="42" x2="40" y2="42" stroke="#8E857E" stroke-width="1.5" stroke-linecap="round"/>
+
+                <rect x="52" y="46" width="36" height="24" rx="2" stroke="#8E857E" stroke-width="1.3" fill="rgba(255,255,255,0.02)"/>
+                <line x1="60" y1="42" x2="66" y2="42" stroke="#8E857E" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="74" y1="42" x2="80" y2="42" stroke="#8E857E" stroke-width="1.5" stroke-linecap="round"/>
+
+                <rect x="32" y="18" width="36" height="24" rx="2" stroke="#8E857E" stroke-width="1.3" fill="rgba(255,255,255,0.02)"/>
+                <line x1="40" y1="14" x2="46" y2="14" stroke="#8E857E" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="54" y1="14" x2="60" y2="14" stroke="#8E857E" stroke-width="1.5" stroke-linecap="round"/>
+
+                <!-- Detached solitary block, gently separated and slightly angled -->
+                <g class="detached-block-group" transform="translate(112, 40) rotate(14)">
+                  <rect x="0" y="4" width="32" height="22" rx="2" stroke="#C48B92" stroke-width="1.4" fill="rgba(196,139,146,0.08)"/>
+                  <line x1="7" y1="0" x2="13" y2="0" stroke="#C48B92" stroke-width="1.6" stroke-linecap="round"/>
+                  <line x1="19" y1="0" x2="25" y2="0" stroke="#C48B92" stroke-width="1.6" stroke-linecap="round"/>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. AFTER THE LEGO METAPHOR (Escaped Thoughts & Remaining Passage) -->
+        <div class="escaped-thoughts-stream">
+          <p class="escaped-thought-primary">Am I really becoming that forgotten part of your life?</p>
+          <p class="escaped-thought-secondary">Did you love me, or were you just being kind to me?</p>
+
+          <div class="confession-continuation">
+            <p>I don't want to believe the signs I've been seeing. I want you to tell me yourself.</p>
+            <p>Because there was only one little conversation I ever wanted to have — an honest one, where I could understand what happened between us.</p>
+            <p>But when I finally called you after so long, the irritation in your voice made it difficult for me to say everything I had been carrying.</p>
+            <p class="rhyme-whisper">And somehow, I could only get out the first line of this stupid little rhyme…</p>
+          </div>
+        </div>
+
+        <!-- 10 & 11 & 12 & 13. 05.01 THE THINGS THAT STAYED (Thin Editorial Expandable Rows) -->
+        <section class="stayed-archive-section">
+          <div class="stayed-header">
+            <span class="section-sub-mono">05.01</span>
+            <h3 class="stayed-title">THE THINGS THAT STAYED</h3>
+            <p class="stayed-sub">Not accusations.<br>Just the things I wish I had known how to explain.</p>
+          </div>
+
+          <div class="stayed-archive-list" role="region" aria-label="Archive entries for what stayed">
+            <!-- Row 1 -->
+            <article class="stayed-row" id="stayed-row-1">
+              <button class="stayed-row-header" onclick="toggleHurtEntry('stayed-row-1')" aria-expanded="false">
+                <div class="stayed-row-left">
+                  <span class="stayed-num mono-meta">01</span>
+                  <span class="stayed-label">WHEN I FELT UNSEEN</span>
+                </div>
+                <span class="stayed-toggle-symbol" aria-hidden="true">+</span>
+              </button>
+              <div class="stayed-row-content">
+                <div class="stayed-content-inner">
+                  <p>What hurt wasn't that you didn't give me attention every second.</p>
+                  <p>It was the moments when I felt like the closeness between us disappeared when other people were around.</p>
+                  <p>Sometimes I didn't need attention. I just wanted to feel that what existed between us was still there.</p>
+                  <div class="stayed-needed-block">
+                    <span class="archive-needed-tag">— WHAT I NEEDED</span>
+                    <p class="stayed-needed-text">To feel that our connection didn't suddenly become invisible around other people.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Row 2 -->
+            <article class="stayed-row" id="stayed-row-2">
+              <button class="stayed-row-header" onclick="toggleHurtEntry('stayed-row-2')" aria-expanded="false">
+                <div class="stayed-row-left">
+                  <span class="stayed-num mono-meta">02</span>
+                  <span class="stayed-label">WHEN SMALL THINGS BECAME BIG</span>
+                </div>
+                <span class="stayed-toggle-symbol" aria-hidden="true">+</span>
+              </button>
+              <div class="stayed-row-content">
+                <div class="stayed-content-inner">
+                  <p>It wasn't about minor disagreements or things going wrong. It was how quickly a small misunderstanding turned into coldness or defensiveness before we even talked about what happened.</p>
+                  <p>Sometimes a small mistake felt like it carried the weight of the entire relationship.</p>
+                  <div class="stayed-needed-block">
+                    <span class="archive-needed-tag">— WHAT I NEEDED</span>
+                    <p class="stayed-needed-text">Correct me without humiliating me. To know that a disagreement didn't mean you stopped caring.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Row 3 -->
+            <article class="stayed-row" id="stayed-row-3">
+              <button class="stayed-row-header" onclick="toggleHurtEntry('stayed-row-3')" aria-expanded="false">
+                <div class="stayed-row-left">
+                  <span class="stayed-num mono-meta">03</span>
+                  <span class="stayed-label">WHEN I WAS ALREADY RUNNING ON EMPTY</span>
+                </div>
+                <span class="stayed-toggle-symbol" aria-hidden="true">+</span>
+              </button>
+              <div class="stayed-row-content">
+                <div class="stayed-content-inner">
+                  <p>There were days when I was struggling and overwhelmed, trying my best just to keep going. Instead of a soft place to land, I felt like I was being judged for not being at my best.</p>
+                  <p>I wasn't asking for solutions, just patience while I was exhausted.</p>
+                  <div class="stayed-needed-block">
+                    <span class="archive-needed-tag">— WHAT I NEEDED</span>
+                    <p class="stayed-needed-text">Listen before defending. A gentle moment of understanding when I was already holding too much.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Row 4 -->
+            <article class="stayed-row" id="stayed-row-4">
+              <button class="stayed-row-header" onclick="toggleHurtEntry('stayed-row-4')" aria-expanded="false">
+                <div class="stayed-row-left">
+                  <span class="stayed-num mono-meta">04</span>
+                  <span class="stayed-label">WHEN DISTANCE BECAME THE ANSWER</span>
+                </div>
+                <span class="stayed-toggle-symbol" aria-hidden="true">+</span>
+              </button>
+              <div class="stayed-row-content">
+                <div class="stayed-content-inner">
+                  <p>Taking space is completely okay, but the silence without knowing why felt heavy. When withdrawal became the default response instead of talking things through, it left me sitting with unanswered questions.</p>
+                  <p>It made the quiet feel louder than any argument.</p>
+                  <div class="stayed-needed-block">
+                    <span class="archive-needed-tag">— WHAT I NEEDED</span>
+                    <p class="stayed-needed-text">Tell me when you need space, instead of leaving me wondering where I stand or what went wrong.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Row 5 -->
+            <article class="stayed-row" id="stayed-row-5">
+              <button class="stayed-row-header" onclick="toggleHurtEntry('stayed-row-5')" aria-expanded="false">
+                <div class="stayed-row-left">
+                  <span class="stayed-num mono-meta">05</span>
+                  <span class="stayed-label">WHEN MY EFFORT FELT INVISIBLE</span>
+                </div>
+                <span class="stayed-toggle-symbol" aria-hidden="true">+</span>
+              </button>
+              <div class="stayed-row-content">
+                <div class="stayed-content-inner">
+                  <p>I didn't do things for praise or recognition. But when the care, late nights, and small gestures I put in felt unnoticed or dismissed, it made me question if anything I did truly mattered to you.</p>
+                  <p>Effort hurts when it feels like it's only moving in one direction.</p>
+                  <div class="stayed-needed-block">
+                    <span class="archive-needed-tag">— WHAT I NEEDED</span>
+                    <p class="stayed-needed-text">Don't make me guess where I stand. A simple acknowledgment that you saw the love I was trying to give.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Row 6 -->
+            <article class="stayed-row" id="stayed-row-6">
+              <button class="stayed-row-header" onclick="toggleHurtEntry('stayed-row-6')" aria-expanded="false">
+                <div class="stayed-row-left">
+                  <span class="stayed-num mono-meta">06</span>
+                  <span class="stayed-label">WHEN I STARTED QUESTIONING US</span>
+                </div>
+                <span class="stayed-toggle-symbol" aria-hidden="true">+</span>
+              </button>
+              <div class="stayed-row-content">
+                <div class="stayed-content-inner">
+                  <p>The hardest moment was when it felt like we weren't a team anymore—like every issue was me versus you rather than both of us facing the problem together.</p>
+                  <p>That was when the fear of losing what we built started feeling real.</p>
+                  <div class="stayed-needed-block">
+                    <span class="archive-needed-tag">— WHAT I NEEDED</span>
+                    <p class="stayed-needed-text">Let us fix things together. To know that when things get difficult, we choose to stand on the same side.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- 14. 05.02 WHAT I NEEDED (Scattered Lines with Generous Vertical Spacing) -->
+        <section class="needed-editorial-section">
+          <div class="needed-header">
+            <span class="section-sub-mono">05.02</span>
+            <h3 class="needed-title">WHAT I NEEDED</h3>
+            <p class="needed-sub">“I wasn't looking for perfection.”</p>
+          </div>
+
+          <div class="scattered-needs-container">
+            <div class="scattered-need-line">LISTEN BEFORE DEFENDING.</div>
+            <div class="scattered-need-line">REASSURE BEFORE DISAPPEARING.</div>
+            <div class="scattered-need-line">CORRECT ME WITHOUT HUMILIATING ME.</div>
+            <div class="scattered-need-line">TELL ME WHEN YOU NEED SPACE.</div>
+            <div class="scattered-need-line">DON'T MAKE ME GUESS WHERE I STAND.</div>
+            <div class="scattered-need-line">LET US FIX THINGS TOGETHER.</div>
+          </div>
+        </section>
+
+        <!-- 15. TYPOGRAPHIC FOCUS (60-100px after, Large Serif in Open Space) -->
+        <div class="partnership-focus-block">
+          <p class="partnership-lead">“I never needed perfection from you.</p>
+          <p class="partnership-punch">I needed partnership.”</p>
+        </div>
+
+        <!-- 16. 05.03 FINAL BALANCE SECTION (Narrower, Calmer) -->
+        <section class="balance-editorial-section">
+          <div class="balance-header">
+            <span class="section-sub-mono">05.03</span>
+            <h4 class="balance-title">AND I KNOW THIS GOES BOTH WAYS.</h4>
+          </div>
+
+          <div class="balance-narrative">
+            <p>These are the things that hurt me.</p>
+            <p>They aren't proof that you were a bad person.</p>
+            <p>They aren't proof that I was always right.</p>
+            <p>And they aren't a list of things you owe me.</p>
+            <p>They're simply the things I wish we had understood about each other sooner.</p>
+            <p>Because if we ever tried again, I wouldn't want us to return to the same relationship and hope it somehow becomes different.</p>
+            <p class="balance-highlight">I'd want us to build a different way of loving each other.</p>
+          </div>
+        </section>
+
+        <!-- 17. FINAL LINE OF PAGE 05 -->
+        <div class="page-5-quiet-finale">
+          <p class="finale-line-top">“I wasn't asking you to be perfect.</p>
+          <p class="finale-line-bottom">I was asking to feel safe being imperfect with you.”</p>
+        </div>
+
+        <!-- Page Navigation Action Button -->
+        <div class="page-nav-action" style="margin-top: 5rem; margin-bottom: 2rem;">
+          <button class="page-continue-btn sunset-glow" onclick="goToPage(6)">
+            Continue: 06 — The Things I Never Wanted →
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PAGE 6: 06 — THE THINGS I NEVER WANTED
+         ========================================== -->
+    <section id="page-6" class="page solemn-section dark-paper blueprint-page">
+      <!-- Faint architectural drafting background grid & technical metadata -->
+      <div class="blueprint-grid-overlay" aria-hidden="true">
+        <div class="bp-grid-line bp-grid-v1"></div>
+        <div class="bp-grid-line bp-grid-v2"></div>
+        <div class="bp-grid-line bp-grid-h1"></div>
+        <div class="bp-grid-line bp-grid-h2"></div>
+        <span class="bp-coord bp-coord-tl">SEC. 06 / REF: 42-B · ARCHIVE DRAFT</span>
+        <span class="bp-coord bp-coord-tr">SCALE: 1:1 · ELEV. 0.00</span>
+        <span class="bp-coord bp-coord-bl">SPEC: UNFINISHED BLUEPRINT</span>
+        <span class="bp-coord bp-coord-br">STATUS: STILL BUILDING</span>
+      </div>
+
+      <div class="blueprint-container">
+        
+        <!-- 2. Hero — The First Statement -->
+        <header class="bp-hero">
+          <div class="bp-hero-meta">
+            <span class="bp-badge">ARCHIVE 06 // BLUEPRINT</span>
+            <span class="bp-tech-mark">GRID: 06-A1</span>
+          </div>
+
+          <div class="bp-hero-heading-group">
+            <h2 class="bp-hero-title">I NEVER WANTED PERFECT.</h2>
+            <div class="bp-annotation-wrapper">
+              <span class="bp-hand-annotation">“not perfect. just present.”</span>
+            </div>
+          </div>
+
+          <p class="bp-hero-sub">“I just wanted someone willing to build with me.”</p>
+        </header>
+
+        <!-- 5. Introduction (Narrow editorial text block) -->
+        <div class="bp-intro-block">
+          <p>I know people fight.</p>
+          <p>I know people misunderstand each other.</p>
+          <p>I know we both have bad days.</p>
+          <p>I know sometimes we'll say the wrong thing.</p>
+          <p class="bp-intro-pivot">That's not what scares me.</p>
+          <p class="bp-intro-focal">What matters to me is what happens after.</p>
+        </div>
+
+        <!-- 6, 7, 8, 9. 06.01 The Foundation -->
+        <section class="bp-section bp-foundation-section">
+          <div class="bp-sec-header">
+            <span class="bp-sec-num">06.01</span>
+            <h3 class="bp-sec-title">THE FOUNDATION</h3>
+          </div>
+
+          <!-- Minimal architectural foundation drafting SVG -->
+          <div class="bp-foundation-visual" aria-hidden="true">
+            <svg class="bp-draft-svg" viewBox="0 0 760 120" preserveAspectRatio="xMidYMid meet">
+              <!-- Horizontal baseline & guides -->
+              <line x1="40" y1="80" x2="720" y2="80" stroke="currentColor" stroke-width="1.2" />
+              <line x1="10" y1="80" x2="40" y2="80" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3" opacity="0.4" />
+              <line x1="720" y1="80" x2="750" y2="80" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3" opacity="0.4" />
+              <line x1="60" y1="92" x2="700" y2="92" stroke="currentColor" stroke-width="0.8" opacity="0.35" />
+              
+              <!-- Pillar 1: Understanding -->
+              <line x1="150" y1="25" x2="150" y2="80" stroke="currentColor" stroke-width="1.2" />
+              <line x1="144" y1="25" x2="156" y2="25" stroke="currentColor" stroke-width="1" />
+              <circle cx="150" cy="80" r="3" fill="none" stroke="currentColor" stroke-width="1.2" />
+              
+              <!-- Pillar 2: Trust -->
+              <line x1="380" y1="25" x2="380" y2="80" stroke="currentColor" stroke-width="1.2" />
+              <line x1="374" y1="25" x2="386" y2="25" stroke="currentColor" stroke-width="1" />
+              <circle cx="380" cy="80" r="3" fill="none" stroke="currentColor" stroke-width="1.2" />
+
+              <!-- Pillar 3: Effort -->
+              <line x1="610" y1="25" x2="610" y2="80" stroke="currentColor" stroke-width="1.2" />
+              <line x1="604" y1="25" x2="616" y2="25" stroke="currentColor" stroke-width="1" />
+              <circle cx="610" cy="80" r="3" fill="none" stroke="currentColor" stroke-width="1.2" />
+
+              <!-- Subtle dimension indicators -->
+              <line x1="150" y1="105" x2="610" y2="105" stroke="currentColor" stroke-width="0.6" stroke-dasharray="2 3" opacity="0.4" />
+              <text x="380" y="115" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="8.5" fill="currentColor" opacity="0.5" letter-spacing="2">BASE METRIC: MUTUALITY</text>
+            </svg>
+          </div>
+
+          <div class="bp-foundation-grid">
+            <div class="bp-foundation-item">
+              <span class="bp-pillar-tag">UNDERSTANDING</span>
+              <p class="bp-pillar-text">I need someone who tries to understand what is happening inside me, even when I don't explain it perfectly.</p>
+            </div>
+            
+            <div class="bp-foundation-item">
+              <span class="bp-pillar-tag">TRUST</span>
+              <p class="bp-pillar-text">Knowing that when things get difficult, we don't immediately become strangers.</p>
+            </div>
+
+            <div class="bp-foundation-item bp-foundation-item-effort">
+              <span class="bp-pillar-tag">EFFORT</span>
+              <p class="bp-pillar-text">
+                Not constant attention.<br>
+                Not expensive gifts.<br>
+                Just the little things that say:<br>
+                <span class="bp-effort-focal">‘I’m still here.’</span>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 10, 11. 06.02 Room 01 / When Things Get Heavy -->
+        <section class="bp-section bp-room-section bp-room-01">
+          <div class="bp-sec-header">
+            <span class="bp-sec-num">06.02</span>
+            <h3 class="bp-sec-title">ROOM 01 / WHEN THINGS GET HEAVY</h3>
+          </div>
+
+          <div class="bp-room-frame">
+            <!-- Technical drafting corner annotations -->
+            <div class="bp-frame-corner bp-fc-tl"></div>
+            <div class="bp-frame-corner bp-fc-tr"></div>
+            <div class="bp-frame-corner bp-fc-bl"></div>
+            <!-- Open/unfinished corner on bottom right -->
+            <div class="bp-frame-corner bp-fc-br-open">
+              <span class="bp-dim-tag bp-dim-w">WIDTH / UNKNOWN</span>
+              <span class="bp-dim-tag bp-dim-h">HEIGHT / UNKNOWN</span>
+            </div>
+
+            <div class="bp-room-content">
+              <div class="bp-room-quote-lead">
+                <span class="bp-lead-large">“I NEED YOU.”</span>
+              </div>
+
+              <div class="bp-room-body">
+                <p class="bp-room-intro">I don't mean:</p>
+                <div class="bp-room-list">
+                  <span>Drop everything.</span>
+                  <span>Fix me.</span>
+                  <span> Just Stay beside me for the Moments.</span>
+                </div>
+                
+                <p class="bp-room-confession">
+                  Sometimes I just need to know that when I'm at my lowest, I'm not facing it completely alone.
+                </p>
+
+                <div class="bp-room-spec-line">
+                  <span class="bp-spec-badge">REQUIRED: PRESENCE</span>
+                </div>
+
+                <p class="bp-room-focal-line">
+                  “Remember ‘YOU’ is Always enough.”
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 12, 13. 06.03 Room 02 / The Ordinary Days -->
+        <section class="bp-section bp-room-section bp-room-02">
+          <div class="bp-sec-header">
+            <span class="bp-sec-num">06.03</span>
+            <h3 class="bp-sec-title">ROOM 02 / THE ORDINARY DAYS</h3>
+            <p class="bp-sec-subtitle">I DON’T NEED GRAND GESTURES.</p>
+          </div>
+
+          <!-- Asymmetric collection of tiny monochrome blueprint objects -->
+          <div class="bp-objects-scatter">
+            
+            <!-- 1. Phone outline -->
+            <div class="bp-object-item bp-obj-phone">
+              <svg class="bp-mini-svg" viewBox="0 0 32 32" aria-hidden="true">
+                <rect x="9" y="4" width="14" height="24" rx="2.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
+                <line x1="13" y1="7" x2="19" y2="7" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                <circle cx="16" cy="24" r="1.2" fill="currentColor"/>
+              </svg>
+              <span class="bp-obj-label">ASK HOW MY DAY WAS</span>
+            </div>
+
+            <!-- 2. Cup outline -->
+            <div class="bp-object-item bp-obj-cup">
+              <svg class="bp-mini-svg" viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M7 11 L9 24 C9 26 21 26 21 24 L23 11 Z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+                <path d="M23 14 C26.5 14 26.5 20 22 20" stroke="currentColor" stroke-width="1.2" fill="none"/>
+                <line x1="12" y1="7" x2="12" y2="5" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+                <line x1="16" y1="8" x2="16" y2="4" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+              </svg>
+              <span class="bp-obj-label">SIT WITH ME</span>
+            </div>
+
+            <!-- 3. Message envelope -->
+            <div class="bp-object-item bp-obj-envelope">
+              <svg class="bp-mini-svg" viewBox="0 0 32 32" aria-hidden="true">
+                <rect x="5" y="8" width="22" height="16" rx="1.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
+                <path d="M5 9 L16 17 L27 9" stroke="currentColor" stroke-width="1.2" fill="none"/>
+              </svg>
+              <span class="bp-obj-label">REMEMBER THE SMALL THING</span>
+            </div>
+
+            <!-- 4. Location marker -->
+            <div class="bp-object-item bp-obj-pin">
+              <svg class="bp-mini-svg" viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M16 4 C11.5 4 8 7.5 8 12 C8 17.5 16 27 16 27 C16 27 24 17.5 24 12 C24 7.5 20.5 4 16 4 Z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+                <circle cx="16" cy="12" r="2.5" stroke="currentColor" stroke-width="1" fill="none"/>
+              </svg>
+              <span class="bp-obj-label">BE HAPPY TO SEE ME</span>
+            </div>
+
+            <!-- 5. Music note -->
+            <div class="bp-object-item bp-obj-music">
+              <svg class="bp-mini-svg" viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M12 23 C12 21.5 10.5 20.5 8.5 20.5 C6.5 20.5 5 21.8 5 23.5 C5 25.2 6.5 26.5 8.5 26.5 C10.5 26.5 12 25.2 12 23.5 L12 9 L24 6 L24 20 C24 18.5 22.5 17.5 20.5 17.5 C18.5 17.5 17 18.8 17 20.5 C17 22.2 18.5 23.5 20.5 23.5 C22.5 23.5 24 22.2 24 20.5 L24 6" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linejoin="round"/>
+              </svg>
+              <span class="bp-obj-label">MAKE ME LAUGH</span>
+            </div>
+
+            <!-- 6. Botanical sprout -->
+            <div class="bp-object-item bp-obj-sprout">
+              <svg class="bp-mini-svg" viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M16 27 L16 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                <path d="M16 18 C11 16 8 11 10 7 C14 8 16 12 16 18 Z" stroke="currentColor" stroke-width="1.1" fill="none"/>
+                <path d="M16 15 C21 13 23 8 20 5 C17 7 16 10 16 15 Z" stroke="currentColor" stroke-width="1.1" fill="none"/>
+              </svg>
+              <span class="bp-obj-label">NOTICE WHEN SOMETHING IS WRONG</span>
+            </div>
+
+          </div>
+
+          <div class="bp-little-things-closure">
+            <p class="bp-lt-quiet">I don't need grand gestures.</p>
+            <p class="bp-lt-focal">I notice the little ones.</p>
+          </div>
+        </section>
+
+        <!-- 14, 15, 16, 17. 06.04 Room 03 / Still Learning You -->
+        <section class="bp-section bp-room-section bp-room-03">
+          <div class="bp-sec-header">
+            <span class="bp-sec-num">06.04</span>
+            <h3 class="bp-sec-title">ROOM 03 / STILL LEARNING YOU</h3>
+          </div>
+
+          <!-- Unfinished Specification Sheet / Two Columns -->
+          <div class="bp-learning-sheet">
+            <div class="bp-learning-col">
+              <div class="bp-learning-col-header">
+                <span class="bp-sheet-tag">SPEC SHEET A</span>
+                <h4 class="bp-col-heading">THINGS I WANT TO KNOW</h4>
+              </div>
+              <ul class="bp-inquiry-list">
+                <li><span class="bp-inq-num">01.</span> What makes you feel safe?</li>
+                <li><span class="bp-inq-num">02.</span> What makes you feel loved?</li>
+                <li><span class="bp-inq-num">03.</span> What scares you?</li>
+                <li><span class="bp-inq-num">04.</span> What do you dream about?</li>
+                <li><span class="bp-inq-num">05.</span> What do you need when you're overwhelmed?</li>
+              </ul>
+            </div>
+
+            <div class="bp-learning-divider" aria-hidden="true">
+              <div class="bp-div-line"></div>
+              <span class="bp-div-node">✦</span>
+              <div class="bp-div-line"></div>
+            </div>
+
+            <div class="bp-learning-col">
+              <div class="bp-learning-col-header">
+                <span class="bp-sheet-tag">SPEC SHEET B</span>
+                <h4 class="bp-col-heading">THINGS I WANT YOU TO KNOW</h4>
+              </div>
+              <ul class="bp-inquiry-list">
+                <li><span class="bp-inq-num">01.</span> What makes me happy?</li>
+                <li><span class="bp-inq-num">02.</span> What makes me shut down?</li>
+                <li><span class="bp-inq-num">03.</span> What I'm afraid of.</li>
+                <li><span class="bp-inq-num">04.</span> What I'm trying to become.</li>
+                <li><span class="bp-inq-num">05.</span> What I need when I'm hurting.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="bp-center-focal-line">
+            <p>“Because knowing someone shouldn't end when you start loving them.”</p>
+          </div>
+        </section>
+
+        <!-- 18, 19, 20. 06.05 Growing Together -->
+        <section class="bp-section bp-growing-section">
+          <div class="bp-sec-header">
+            <span class="bp-sec-num">06.05</span>
+            <h3 class="bp-sec-title">GROWING TOGETHER</h3>
+          </div>
+
+          <div class="bp-growing-layout">
+            <!-- Architectural Converging ME / YOU lines diagram -->
+            <div class="bp-growing-diagram" aria-hidden="true">
+              <svg class="bp-converge-svg" viewBox="0 0 160 260">
+                <!-- Line ME: starts at x=32, curves toward x=68 -->
+                <text x="32" y="20" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="11" fill="currentColor" letter-spacing="1">ME</text>
+                <path d="M32 30 C32 90, 68 120, 68 180 L68 230" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                <line x1="68" y1="230" x2="68" y2="250" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.4"/>
+
+                <!-- Line YOU: starts at x=128, curves toward x=92 -->
+                <text x="128" y="20" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="11" fill="currentColor" letter-spacing="1">YOU</text>
+                <path d="M128 30 C128 90, 92 120, 92 180 L92 230" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                <line x1="92" y1="230" x2="92" y2="250" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.4"/>
+
+                <!-- Parallel alignment bracket / dimension -->
+                <line x1="68" y1="180" x2="92" y2="180" stroke="#E8C9CC" stroke-width="0.8" opacity="0.6"/>
+                <circle cx="68" cy="180" r="1.5" fill="#E8C9CC"/>
+                <circle cx="92" cy="180" r="1.5" fill="#E8C9CC"/>
+                <text x="80" y="174" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7.5" fill="#E8C9CC" opacity="0.75" letter-spacing="1">PARALLEL</text>
+              </svg>
+            </div>
+
+            <div class="bp-growing-text">
+              <p>I'm not asking you to become someone else for me.</p>
+              <p>And I don't want to become someone else for you.</p>
+              <p>I want us to be people who can look at ourselves and say:</p>
+              <p class="bp-growing-highlight">‘Maybe I can do this better.’</p>
+
+              <div class="bp-language-block">
+                <p>I want to learn your language.</p>
+                <p>I want you to learn mine.</p>
+                <p>And somewhere in the middle,</p>
+                <p class="bp-build-highlight">we build our own.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 21, 22. 06.06 The "It Is What It Is" Section -->
+        <section class="bp-section bp-stamp-section">
+          <div class="bp-sec-header">
+            <span class="bp-sec-num">06.06</span>
+            <h3 class="bp-sec-title">SPECIFICATION REVISION</h3>
+          </div>
+
+          <div class="bp-stamp-container">
+            <!-- Micro-interaction interactive stamp -->
+            <div id="blueprint-stamp" class="blueprint-stamp-btn" onclick="toggleBlueprintStamp(this)" role="button" tabindex="0" aria-label="Toggle stamp text">
+              <div class="bp-stamp-inner">
+                <span class="stamp-label-init">IT IS WHAT IT IS</span>
+                <span class="stamp-label-revised">IT CAN BE DIFFERENT</span>
+              </div>
+              <span class="bp-stamp-hint">tap or hover to revise</span>
+            </div>
+
+            <div class="bp-stamp-text-block">
+              <p class="bp-stamp-opening">I don't want this to be the end of the conversation.</p>
+              <div class="bp-strike-phrase-wrap">
+                <span class="bp-strikethrough-line">“This is who I am.”</span>
+                <span class="bp-grow-phrase">But I can still grow.</span>
+              </div>
+              <p class="bp-stamp-subtext">
+                “Not because either of us is broken.<br>
+                Because we're both still learning.”
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 23, 24. 06.07 What I Actually Want -->
+        <section class="bp-section bp-actually-want-section">
+          <div class="bp-sec-header bp-sec-header-center">
+            <span class="bp-sec-num">06.07</span>
+            <h3 class="bp-sec-title">WHAT I ACTUALLY WANT</h3>
+          </div>
+
+          <p class="bp-want-lead">“I don't need someone who makes every day perfect.”</p>
+
+          <!-- Six vertical statements with generous spacing and alternating typography -->
+          <div class="bp-six-statements-list">
+            <div class="bp-statement-item bp-stmt-serif">
+              <span class="bp-stmt-index">01</span>
+              <span class="bp-stmt-content">SOMEONE WHO STAYS.</span>
+            </div>
+            <div class="bp-statement-item bp-stmt-mono">
+              <span class="bp-stmt-index">02</span>
+              <span class="bp-stmt-content">SOMEONE WHO TRIES.</span>
+            </div>
+            <div class="bp-statement-item bp-stmt-serif">
+              <span class="bp-stmt-index">03</span>
+              <span class="bp-stmt-content">SOMEONE WHO LISTENS.</span>
+            </div>
+            <div class="bp-statement-item bp-stmt-mono">
+              <span class="bp-stmt-index">04</span>
+              <span class="bp-stmt-content">SOMEONE WHO COMMUNICATES.</span>
+            </div>
+            <div class="bp-statement-item bp-stmt-serif">
+              <span class="bp-stmt-index">05</span>
+              <span class="bp-stmt-content">SOMEONE WHO NOTICES.</span>
+            </div>
+            <div class="bp-statement-item bp-stmt-mono">
+              <span class="bp-stmt-index">06</span>
+              <span class="bp-stmt-content">SOMEONE WHO GROWS.</span>
+            </div>
+          </div>
+
+          <!-- 24. Final Blueprint Visual (Unfinished architectural drafting lines) -->
+          <div class="bp-final-drafting-visual" aria-hidden="true">
+            <svg class="bp-draft-svg" viewBox="0 0 680 90" preserveAspectRatio="xMidYMid meet">
+              <!-- Unfinished lines extending and stopping -->
+              <line x1="20" y1="40" x2="310" y2="40" stroke="currentColor" stroke-width="1.2" />
+              <line x1="310" y1="40" x2="440" y2="40" stroke="currentColor" stroke-width="1" stroke-dasharray="4 4" opacity="0.5" />
+              <line x1="440" y1="40" x2="660" y2="40" stroke="currentColor" stroke-width="1.2" />
+              <line x1="160" y1="15" x2="160" y2="65" stroke="currentColor" stroke-width="1" />
+              <line x1="520" y1="15" x2="520" y2="65" stroke="currentColor" stroke-width="1" />
+              <line x1="145" y1="28" x2="175" y2="28" stroke="currentColor" stroke-width="0.8" opacity="0.4" />
+              <line x1="505" y1="52" x2="535" y2="52" stroke="currentColor" stroke-width="0.8" opacity="0.4" />
+              <circle cx="310" cy="40" r="2.5" fill="none" stroke="currentColor" stroke-width="1" />
+              <circle cx="440" cy="40" r="2.5" fill="none" stroke="currentColor" stroke-width="1" />
+            </svg>
+          </div>
+
+          <!-- Technical metadata annotations -->
+          <div class="bp-technical-metadata">
+            <div class="bp-meta-entry">
+              <span class="bp-meta-k">STATUS:</span>
+              <span class="bp-meta-v">STILL BUILDING</span>
+            </div>
+            <div class="bp-meta-entry">
+              <span class="bp-meta-k">STRUCTURE:</span>
+              <span class="bp-meta-v">TWO PEOPLE</span>
+            </div>
+            <div class="bp-meta-entry">
+              <span class="bp-meta-k">FOUNDATION:</span>
+              <span class="bp-meta-v">TRUST / EFFORT / UNDERSTANDING</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 25, 26. Final Major Statement -->
+        <div class="bp-finale-block">
+          <h3 class="bp-finale-quote">
+            “I don't need someone who makes every day perfect.<br>
+            I need someone who makes the difficult days feel like we're facing them together.”
+          </h3>
+          <p class="bp-finale-whisper">“Maybe that's all I ever meant.”</p>
+        </div>
+
+        <!-- 27. Page Footer Navigation -->
+        <div class="page-nav-action bp-footer-actions">
+          <button class="page-continue-btn" onclick="goToPage(7)">
+            Continue: 07 — Voice Notes →
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PAGE 7: 07 — VOICE NOTES
+         ========================================== -->
+    <section id="page-7" class="page voicenotes-page-7">
+      <svg class="doodle doodle-music vn-bg-doodle" style="top: 8%; right: 6%; opacity: 0.25;" viewBox="0 0 40 40" aria-hidden="true"><circle cx="12" cy="30" r="4" fill="currentColor"/><circle cx="28" cy="24" r="4" fill="currentColor"/><path d="M16 30 L16 10 L32 4 L32 24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M16 14 L32 8" stroke="currentColor" stroke-width="1.5"/></svg>
+      <svg class="doodle doodle-sparkles vn-bg-doodle" style="top: 15%; left: 5%; opacity: 0.2;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 Q20 20 36 20 Q20 20 20 36 Q20 20 4 20 Q20 20 20 4 Z" fill="rgba(232, 201, 204, 0.3)" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="32" cy="30" r="1.2" fill="currentColor"/></svg>
+      <svg class="doodle doodle-leaves vn-bg-doodle" style="bottom: 12%; left: 4%; opacity: 0.2;" viewBox="0 0 45 45" aria-hidden="true"><path d="M8 38 Q22 24 38 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/><path d="M20 26 Q14 20 16 14 Q22 18 20 26 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.1"/><path d="M26 20 Q32 14 34 8 Q28 12 26 20 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.1"/><path d="M28 28 Q34 26 38 20 Q30 22 28 28 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.1"/></svg>
+
+      <div class="voicenotes-container">
+        <!-- 1. Page Header Block -->
+        <header class="vn-header-block">
+          <div class="vn-kicker-mono">
+            <span>07</span>
+            <span class="kicker-sep">/</span>
+            <span>VOICE NOTES</span>
+          </div>
+          <h2 class="vn-main-title">VOICE NOTES</h2>
+          <p class="vn-main-statement">TWO WEEKS, RECORDED.</p>
+          <p class="vn-supporting-line">Some thoughts sounded different when I said them out loud.</p>
+          <div class="vn-status-tracker">
+            <span class="vn-status-tag" id="vn-status-tag">CURRENTLY — DAY 04 / 14</span>
+            <span class="vn-concept-tag">14 DAYS / 14 NOTES / ONE DAY AT A TIME</span>
+          </div>
+        </header>
+
+        <!-- 2. Dynamic 14-Day Timeline Section -->
+        <div class="vn-timeline-section" id="vn-timeline-section">
+          <div class="vn-timeline-legend">
+            <span class="vn-legend-item"><span class="vn-legend-dot filled">●</span> Recorded</span>
+            <span class="vn-legend-item"><span class="vn-legend-dot hollow">○</span> Unrecorded</span>
+          </div>
+          <div class="vn-timeline-scroll-wrap">
+            <div class="vn-timeline" id="vn-timeline" role="tablist" aria-label="14-Day Voice Journal Timeline">
+              <!-- Rendered dynamically by script.js -->
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Active Voice Note Card & Unrecorded Popover Mount -->
+        <div class="vn-active-card-container">
+          <div id="vn-active-card" class="vn-card-mount">
+            <!-- Rendered dynamically by script.js -->
+          </div>
+
+          <div id="vn-unrecorded-popover" class="vn-popover hidden" role="alert" aria-live="polite">
+            <div class="vn-popover-inner">
+              <span class="vn-popover-tag" id="vn-popover-day">DAY 04</span>
+              <p class="vn-popover-msg" id="vn-popover-msg">Tomorrow hasn't happened yet.</p>
+            </div>
+            <button class="vn-popover-close-btn" id="vn-popover-close" type="button" aria-label="Close note">×</button>
+          </div>
+        </div>
+
+        <!-- 4. Section 16: RECORDED, NOT SENT -->
+        <section class="vn-editorial-section vn-not-sent-section">
+          <div class="vn-sec-header">
+            <h3 class="vn-sec-kicker">RECORDED, NOT SENT.</h3>
+          </div>
+          <div class="vn-editorial-prose">
+            <p>Since I am blocked on Instagram and couldn't reach you, and because I still miss you so much, I decided to upload one voice note here every day for the two weeks.so i don't feel alone.</p>
+            <p>I don't need an answer. I don't expect a reply to any of this.</p>
+            <p>I just wanted a way to feel close to you, and to leave these thoughts somewhere honest.</p>
+            <p>Not everything here was recorded because I expected anything back.</p>
+            <p>Some things were easier to say into a microphone than they were to say in a conversation.</p>
+            <p>Some were thoughts I needed to get out of my head.</p>
+            <p>Some were things I didn't know how to explain yet.</p>
+          </div>
+        </section>
+
+        <!-- 5. Section 17: 07.01 / THE THINGS I DIDN'T SAY -->
+        <section class="vn-editorial-section vn-didnt-say-section">
+          <div class="vn-sec-header">
+            <span class="vn-sub-index">07.01</span>
+            <span class="kicker-sep">/</span>
+            <h3 class="vn-sec-kicker">THE THINGS I DIDN'T SAY</h3>
+          </div>
+          <div class="vn-editorial-lead">
+            <p>There were things I could explain perfectly in my head.</p>
+            <p>But whenever I tried to say them, they came out wrong.</p>
+            <p class="vn-lead-highlight">So sometimes I pressed record instead.</p>
+          </div>
+
+          <!-- Standalone thought fragments with generous whitespace -->
+          <div class="vn-fragments-flow">
+            <div class="vn-fragment-item"><span>“I was scared.”</span></div>
+            <div class="vn-fragment-item"><span>“I was angry.”</span></div>
+            <div class="vn-fragment-item"><span>“I missed you.”</span></div>
+            <div class="vn-fragment-item"><span>“I didn't understand.”</span></div>
+            <div class="vn-fragment-item"><span>“I understood too late.”</span></div>
+            <div class="vn-fragment-item"><span>“I was trying.”</span></div>
+            <div class="vn-fragment-item"><span>“I'm still learning.”</span></div>
+          </div>
+        </section>
+
+        <!-- 6. Section 18: THE LAST RECORDING -->
+        <section class="vn-editorial-section vn-last-recording-section" id="vn-last-recording-section">
+          <div class="vn-sec-header">
+            <span class="vn-sec-kicker">THE LAST RECORDING</span>
+            <h4 class="vn-sec-sub">DAY 14 / FINAL ENTRY</h4>
+          </div>
+          <div class="vn-editorial-prose">
+            <p>I don't know what happens after this.</p>
+            <p class="vn-whisper-line">Maybe that's why I wanted to record it.</p>
+          </div>
+          <div class="vn-completion-container" id="vn-completion-badge">
+            <!-- If Day 14 exists: 14 DAYS / 14 NOTES / ARCHIVE COMPLETE -->
+          </div>
+        </section>
+
+        <!-- 7. Page Continue Navigation -->
+        <div class="page-nav-action bp-footer-actions">
+          <button class="page-continue-btn" onclick="goToPage(8)">
+            Continue: 08 — What We Imagined →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PAGE 8: 08 — WHAT WE IMAGINED
+         ========================================== -->
+    <section id="page-8" class="page">
+      <svg class="doodle doodle-sunflower" style="top: 7%; right: 4%;" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="7" fill="rgba(139, 94, 60, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M25 18 C23 10 27 10 25 18 M32 25 C40 23 40 27 32 25 M25 32 C27 40 23 40 25 32 M18 25 C10 27 10 23 18 25 M30 20 C37 14 34 11 30 20 M30 30 C37 36 34 39 30 30 M20 30 C13 36 16 39 20 30 M20 20 C13 14 16 11 20 20" stroke="#C29D45" stroke-width="1.3" stroke-linecap="round" fill="rgba(242, 199, 121, 0.3)"/></svg>
+      <svg class="doodle doodle-sparkles" style="top: 10%; left: 4%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 Q20 20 36 20 Q20 20 20 36 Q20 20 4 20 Q20 20 20 4 Z" fill="rgba(232, 201, 204, 0.3)" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="32" cy="30" r="1.2" fill="currentColor"/></svg>
+      <svg class="doodle doodle-tulip" style="top: 32%; left: 3%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M20 56 L20 32" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M20 44 Q28 40 32 30" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M20 32 C12 28 10 18 16 12 C18 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M20 32 C28 28 30 18 24 12 C22 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M16 16 C18 10 20 6 20 6 C20 6 22 10 24 16 Z" fill="rgba(185, 133, 140, 0.4)" stroke="currentColor" stroke-width="1.2"/></svg>
+      <svg class="doodle doodle-bow" style="top: 52%; right: 3%;" viewBox="0 0 50 35" aria-hidden="true"><ellipse cx="25" cy="14" rx="3.5" ry="3" fill="currentColor"/><path d="M21 14 C12 6 6 12 12 18 C17 22 21 16 21 14 Z" stroke="currentColor" stroke-width="1.2" fill="rgba(232, 201, 204, 0.25)"/><path d="M29 14 C38 6 44 12 38 18 C33 22 29 16 29 14 Z" stroke="currentColor" stroke-width="1.2" fill="rgba(232, 201, 204, 0.25)"/><path d="M23 17 Q17 26 14 30 M27 17 Q33 26 36 30" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <svg class="doodle doodle-candle" style="bottom: 32%; left: 3%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M14 26 C14 24 26 24 26 26 L26 54 C26 56 14 56 14 54 Z" stroke="currentColor" fill="none" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="20" cy="26" rx="6" ry="2" stroke="currentColor" fill="none" stroke-width="1.2"/><path d="M20 24 L20 18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M20 18 C17 14 17 8 20 5 C23 8 23 14 20 18 Z" fill="rgba(242, 199, 121, 0.45)" stroke="#C29D45" stroke-width="1.2"/><path d="M12 36 Q10 40 12 44" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/></svg>
+      <svg class="doodle doodle-leaves" style="bottom: 25%; right: 4%;" viewBox="0 0 45 45" aria-hidden="true"><path d="M8 38 Q22 24 38 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/><path d="M20 26 Q14 20 16 14 Q22 18 20 26 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.1"/><path d="M26 20 Q32 14 34 8 Q28 12 26 20 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.1"/><path d="M28 28 Q34 26 38 20 Q30 22 28 28 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.1"/></svg>
+      <svg class="doodle doodle-stars" style="bottom: 14%; right: 4%;" viewBox="0 0 45 45" aria-hidden="true"><path d="M22 6 L24 16 L34 18 L24 20 L22 30 L20 20 L10 18 L20 16 Z" fill="rgba(242, 199, 121, 0.35)" stroke="#C29D45" stroke-width="1.1"/><circle cx="36" cy="10" r="1.4" fill="currentColor"/><circle cx="10" cy="34" r="1.6" fill="currentColor"/></svg>
+      <svg class="doodle doodle-heart" style="bottom: 8%; left: 4%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 33 C18 31 6 22 6 14 C6 8.5 10.5 5 15.5 5 C17.8 5 19.3 6.2 20 7.5 C20.7 6.2 22.2 5 24.5 5 C29.5 5 34 8.5 34 14 C34 22 22 31 20 33 Z" stroke="currentColor" stroke-width="1.3" fill="rgba(232, 201, 204, 0.25)" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+      <div class="section-container">
+        <header class="section-header">
+          <span class="chapter-mono">08 — WHAT WE IMAGINED</span>
+          <h2 class="section-title">We once imagined a future.</h2>
+          <p class="section-intro">Not to hold as a demand or debt, but to remember the warmth of what we hoped for.</p>
+        </header>
+
+        <!-- Interactive Constellation & Gift Boxes -->
+        <div class="dream-constellation-wrapper" id="dream-constellation-wrapper">
+          <!-- SVG Dotted Map Connectors -->
+          <svg class="dream-map-svg" id="dream-map-svg" aria-hidden="true"></svg>
+
+          <div class="dream-constellation-grid">
+            <!-- 1. Top-Left Box: Travel the World -->
+            <div class="dream-gift-box area-tl" id="gift-box-1" onclick="toggleGiftBox(this, event)">
+              <div class="gift-box-cover">
+                <div class="gift-ribbon-stripe h-stripe"></div>
+                <div class="gift-ribbon-stripe v-stripe"></div>
+                <div class="gift-bow-accent">
+                  <svg viewBox="0 0 36 26" width="30" height="22" fill="none" stroke="currentColor">
+                    <path d="M18 13 C12 6 6 10 10 17 C13 21 18 15 18 13 Z" fill="rgba(217, 138, 148, 0.35)" stroke="#B9858C" stroke-width="1.2"/>
+                    <path d="M18 13 C24 6 30 10 26 17 C23 21 18 15 18 13 Z" fill="rgba(217, 138, 148, 0.35)" stroke="#B9858C" stroke-width="1.2"/>
+                    <circle cx="18" cy="13" r="2.8" fill="#B9858C"/>
+                    <path d="M16 15 Q13 21 9 24 M20 15 Q23 21 27 24" stroke="#B9858C" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="gift-box-label">
+                  <span class="gift-icon">✈️</span>
+                  <span class="gift-name">Travel the World</span>
+                </div>
+                <span class="gift-unwrap-hint">Tap to unwrap ✦</span>
+              </div>
+              <div class="gift-note-card">
+                <div class="gift-card-header">
+                  <span class="gift-step-tag mono-meta">[NEXT STOP · 01]</span>
+                  <button class="gift-card-close" type="button" aria-label="Close message" onclick="event.stopPropagation(); closeGiftBox('gift-box-1');">✕</button>
+                </div>
+                <h4 class="gift-card-title">Travel the World</h4>
+                <p class="gift-card-msg">“the places we will go together and the adventure we will do”</p>
+                <div class="gift-card-footer">
+                  <span class="gift-heart-glyph">♥</span>
+                  <span class="mono-meta">ARCHIVED DREAM</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Top-Center Box: Good Career -->
+            <div class="dream-gift-box area-top" id="gift-box-2" onclick="toggleGiftBox(this, event)">
+              <div class="gift-box-cover">
+                <div class="gift-ribbon-stripe h-stripe"></div>
+                <div class="gift-ribbon-stripe v-stripe"></div>
+                <div class="gift-bow-accent">
+                  <svg viewBox="0 0 36 26" width="30" height="22" fill="none" stroke="currentColor">
+                    <path d="M18 13 C12 6 6 10 10 17 C13 21 18 15 18 13 Z" fill="rgba(217, 138, 148, 0.35)" stroke="#B9858C" stroke-width="1.2"/>
+                    <path d="M18 13 C24 6 30 10 26 17 C23 21 18 15 18 13 Z" fill="rgba(217, 138, 148, 0.35)" stroke="#B9858C" stroke-width="1.2"/>
+                    <circle cx="18" cy="13" r="2.8" fill="#B9858C"/>
+                    <path d="M16 15 Q13 21 9 24 M20 15 Q23 21 27 24" stroke="#B9858C" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="gift-box-label">
+                  <span class="gift-icon">💼</span>
+                  <span class="gift-name">Good Career</span>
+                </div>
+                <span class="gift-unwrap-hint">Tap to unwrap ✦</span>
+              </div>
+              <div class="gift-note-card">
+                <div class="gift-card-header">
+                  <span class="gift-step-tag mono-meta">[NEXT STOP · 02]</span>
+                  <button class="gift-card-close" type="button" aria-label="Close message" onclick="event.stopPropagation(); closeGiftBox('gift-box-2');">✕</button>
+                </div>
+                <h4 class="gift-card-title">Good Career</h4>
+                <p class="gift-card-msg">“Cheering for each other, celebrating every small victory, and watching each other build what we always dreamed of.”</p>
+                <div class="gift-card-footer">
+                  <span class="gift-heart-glyph">♥</span>
+                  <span class="mono-meta">MUTUAL PRIDE</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Top-Right Box: Build Our Home -->
+            <div class="dream-gift-box area-tr" id="gift-box-3" onclick="toggleGiftBox(this, event)">
+              <div class="gift-box-cover">
+                <div class="gift-ribbon-stripe h-stripe"></div>
+                <div class="gift-ribbon-stripe v-stripe"></div>
+                <div class="gift-bow-accent">
+                  <svg viewBox="0 0 36 26" width="30" height="22" fill="none" stroke="currentColor">
+                    <path d="M18 13 C12 6 6 10 10 17 C13 21 18 15 18 13 Z" fill="rgba(217, 138, 148, 0.35)" stroke="#B9858C" stroke-width="1.2"/>
+                    <path d="M18 13 C24 6 30 10 26 17 C23 21 18 15 18 13 Z" fill="rgba(217, 138, 148, 0.35)" stroke="#B9858C" stroke-width="1.2"/>
+                    <circle cx="18" cy="13" r="2.8" fill="#B9858C"/>
+                    <path d="M16 15 Q13 21 9 24 M20 15 Q23 21 27 24" stroke="#B9858C" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="gift-box-label">
+                  <span class="gift-icon">🏡</span>
+                  <span class="gift-name">Build Our Home</span>
+                </div>
+                <span class="gift-unwrap-hint">Tap to unwrap ✦</span>
+              </div>
+              <div class="gift-note-card">
+                <div class="gift-card-header">
+                  <span class="gift-step-tag mono-meta">[NEXT STOP · 03]</span>
+                  <button class="gift-card-close" type="button" aria-label="Close message" onclick="event.stopPropagation(); closeGiftBox('gift-box-3');">✕</button>
+                </div>
+                <h4 class="gift-card-title">Build Our Home</h4>
+                <p class="gift-card-msg">“A quiet, peaceful place of our own. Warm coffee, shelves of books, and laughter that belongs only to us.”</p>
+                <div class="gift-card-footer">
+                  <span class="gift-heart-glyph">♥</span>
+                  <span class="mono-meta">THE VISION</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Middle-Left Box: Be Happy -->
+            <div class="dream-gift-box area-ml" id="gift-box-4" onclick="toggleGiftBox(this, event)">
+              <div class="gift-box-cover">
+                <div class="gift-ribbon-stripe h-stripe"></div>
+                <div class="gift-ribbon-stripe v-stripe"></div>
+                <div class="gift-bow-accent">
+                  <svg viewBox="0 0 36 26" width="30" height="22" fill="none" stroke="currentColor">
+                    <path d="M18 13 C12 6 6 10 10 17 C13 21 18 15 18 13 Z" fill="rgba(217, 138, 148, 0.35)" stroke="#B9858C" stroke-width="1.2"/>
+                    <path d="M18 13 C24 6 30 10 26 17 C23 21 18 15 18 13 Z" fill="rgba(217, 138, 148, 0.35)" stroke="#B9858C" stroke-width="1.2"/>
+                    <circle cx="18" cy="13" r="2.8" fill="#B9858C"/>
+                    <path d="M16 15 Q13 21 9 24 M20 15 Q23 21 27 24" stroke="#B9858C" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="gift-box-label">
+                  <span class="gift-icon">🌻</span>
+                  <span class="gift-name">Be Happy</span>
+                </div>
+                <span class="gift-unwrap-hint">Tap to unwrap ✦</span>
+              </div>
+              <div class="gift-note-card">
+                <div class="gift-card-header">
+                  <span class="gift-step-tag mono-meta">[NEXT STOP · 04]</span>
+                  <button class="gift-card-close" type="button" aria-label="Close message" onclick="event.stopPropagation(); closeGiftBox('gift-box-4');">✕</button>
+                </div>
+                <h4 class="gift-card-title">Be Happy</h4>
+                <p class="gift-card-msg">“Making the everyday chaos feel lighter, smiling through everything together.”</p>
+                <div class="gift-card-footer">
+                  <span class="gift-heart-glyph">♥</span>
+                  <span class="mono-meta">EVERYDAY JOY</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CENTER ELEMENT: The Dream Team Picture Frame -->
+            <div class="dream-center-piece" id="dream-center-piece">
+              <div class="tape-strip tape-center" aria-hidden="true"></div>
+              <div class="dream-badge mono-meta">THE DREAM TEAM</div>
+              <h3 class="dream-tagline">Same Chaos, Better Together</h3>
+              <div class="dream-photo-frame">
+                <img src="images/general/dream-team.png" alt="The Dream Team pixel art" class="dream-team-img" loading="eager" />
+              </div>
+              <p class="dream-caption">“We thought of two people navigating life side by side, making the everyday madness feel lighter.”</p>
+            </div>
+
+            <!-- 5. Middle-Right Box: Favorite Chaos Partner -->
+            <div class="dream-gift-box area-mr" id="gift-box-8" onclick="toggleGiftBox(this, event)">
+              <div class="gift-box-cover">
+                <div class="gift-ribbon-stripe h-stripe"></div>
+                <div class="gift-ribbon-stripe v-stripe"></div>
+                <div class="gift-bow-accent">
+                  <svg viewBox="0 0 36 26" width="30" height="22" fill="none" stroke="currentColor">
+                    <path d="M18 13 C12 6 6 10 10 17 C13 21 18 15 18 13 Z" fill="rgba(217, 138, 148, 0.35)" stroke="#B9858C" stroke-width="1.2"/>
+                    <path d="M18 13 C24 6 30 10 26 17 C23 21 18 15 18 13 Z" fill="rgba(217, 138, 148, 0.35)" stroke="#B9858C" stroke-width="1.2"/>
+                    <circle cx="18" cy="13" r="2.8" fill="#B9858C"/>
+                    <path d="M16 15 Q13 21 9 24 M20 15 Q23 21 27 24" stroke="#B9858C" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="gift-box-label">
+                  <span class="gift-icon">🐱</span>
+                  <span class="gift-name">Favorite Chaos Partner</span>
+                </div>
+                <span class="gift-unwrap-hint">Tap to unwrap ✦</span>
+              </div>
+              <div class="gift-note-card">
+                <div class="gift-card-header">
+                  <span class="gift-step-tag mono-meta">[FAVORITE CHAOS]</span>
+                  <button class="gift-card-close" type="button" aria-label="Close message" onclick="event.stopPropagation(); closeGiftBox('gift-box-8');">✕</button>
+                </div>
+                <h4 class="gift-card-title">Favorite Chaos Partner</h4>
+                <p class="gift-card-msg">“Through all the silliness, the stubborn moods, and the quiet moments — still the only person I'd choose to get lost with.”</p>
+                <div class="gift-card-footer">
+                  <span class="gift-heart-glyph">♥</span>
+                  <span class="mono-meta">SOUL COMPANION</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. Bottom-Left Box: Level: Forever -->
+            <div class="dream-gift-box area-bl" id="gift-box-5" onclick="toggleGiftBox(this, event)">
+              <div class="gift-box-cover">
+                <div class="gift-ribbon-stripe h-stripe"></div>
+                <div class="gift-ribbon-stripe v-stripe"></div>
+                <div class="gift-bow-accent">
+                  <svg viewBox="0 0 36 26" width="30" height="22" fill="none" stroke="currentColor">
+                    <path d="M18 13 C12 6 6 10 10 17 C13 21 18 15 18 13 Z" fill="rgba(217, 138, 148, 0.35)" stroke="#B9858C" stroke-width="1.2"/>
+                    <path d="M18 13 C24 6 30 10 26 17 C23 21 18 15 18 13 Z" fill="rgba(217, 138, 148, 0.35)" stroke="#B9858C" stroke-width="1.2"/>
+                    <circle cx="18" cy="13" r="2.8" fill="#B9858C"/>
+                    <path d="M16 15 Q13 21 9 24 M20 15 Q23 21 27 24" stroke="#B9858C" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="gift-box-label">
+                  <span class="gift-icon">👑</span>
+                  <span class="gift-name">Level: Forever</span>
+                </div>
+                <span class="gift-unwrap-hint">Tap to unwrap ✦</span>
+              </div>
+              <div class="gift-note-card">
+                <div class="gift-card-header">
+                  <span class="gift-step-tag mono-meta">[QUEST COMPLETED]</span>
+                  <button class="gift-card-close" type="button" aria-label="Close message" onclick="event.stopPropagation(); closeGiftBox('gift-box-5');">✕</button>
+                </div>
+                <h4 class="gift-card-title">Level: Forever</h4>
+                <p class="gift-card-msg">“Dreams: 12/12 · Memories: 99+<br>You found your person... and your favorite chaos partner.”</p>
+                <div class="gift-card-footer">
+                  <span class="gift-heart-glyph">♥</span>
+                  <span class="mono-meta">MILESTONE</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. Bottom-Center Box: The Adventure Isn't Over -->
+            <div class="dream-gift-box area-bot" id="gift-box-6" onclick="toggleGiftBox(this, event)">
+              <div class="gift-box-cover">
+                <div class="gift-ribbon-stripe h-stripe"></div>
+                <div class="gift-ribbon-stripe v-stripe"></div>
+                <div class="gift-bow-accent">
+                  <svg viewBox="0 0 36 26" width="30" height="22" fill="none" stroke="currentColor">
+                    <path d="M18 13 C12 6 6 10 10 17 C13 21 18 15 18 13 Z" fill="rgba(217, 138, 148, 0.35)" stroke="#B9858C" stroke-width="1.2"/>
+                    <path d="M18 13 C24 6 30 10 26 17 C23 21 18 15 18 13 Z" fill="rgba(217, 138, 148, 0.35)" stroke="#B9858C" stroke-width="1.2"/>
+                    <circle cx="18" cy="13" r="2.8" fill="#B9858C"/>
+                    <path d="M16 15 Q13 21 9 24 M20 15 Q23 21 27 24" stroke="#B9858C" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="gift-box-label">
+                  <span class="gift-icon">⭐</span>
+                  <span class="gift-name">The Adventure Isn't Over</span>
+                </div>
+                <span class="gift-unwrap-hint">Tap to unwrap ✦</span>
+              </div>
+              <div class="gift-note-card">
+                <div class="gift-card-header">
+                  <span class="gift-step-tag mono-meta">[COLLECT MEMORIES]</span>
+                  <button class="gift-card-close" type="button" aria-label="Close message" onclick="event.stopPropagation(); closeGiftBox('gift-box-6');">✕</button>
+                </div>
+                <h4 class="gift-card-title">The Adventure Isn't Over</h4>
+                <p class="gift-card-msg">“Collect more memories... There is still so much of this world left for us to see.”</p>
+                <div class="gift-card-footer">
+                  <span class="gift-heart-glyph">♥</span>
+                  <span class="mono-meta">UNFINISHED JOURNEY</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 7. Bottom-Right Box: Better Together → -->
+            <div class="dream-gift-box area-br" id="gift-box-7" onclick="toggleGiftBox(this, event)">
+              <div class="gift-box-cover">
+                <div class="gift-ribbon-stripe h-stripe"></div>
+                <div class="gift-ribbon-stripe v-stripe"></div>
+                <div class="gift-bow-accent">
+                  <svg viewBox="0 0 36 26" width="30" height="22" fill="none" stroke="currentColor">
+                    <path d="M18 13 C12 6 6 10 10 17 C13 21 18 15 18 13 Z" fill="rgba(217, 138, 148, 0.35)" stroke="#B9858C" stroke-width="1.2"/>
+                    <path d="M18 13 C24 6 30 10 26 17 C23 21 18 15 18 13 Z" fill="rgba(217, 138, 148, 0.35)" stroke="#B9858C" stroke-width="1.2"/>
+                    <circle cx="18" cy="13" r="2.8" fill="#B9858C"/>
+                    <path d="M16 15 Q13 21 9 24 M20 15 Q23 21 27 24" stroke="#B9858C" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="gift-box-label">
+                  <span class="gift-icon">💫</span>
+                  <span class="gift-name">Better Together →</span>
+                </div>
+                <span class="gift-unwrap-hint">Tap to unwrap ✦</span>
+              </div>
+              <div class="gift-note-card">
+                <div class="gift-card-header">
+                  <span class="gift-step-tag mono-meta">[THE DREAM TEAM]</span>
+                  <button class="gift-card-close" type="button" aria-label="Close message" onclick="event.stopPropagation(); closeGiftBox('gift-box-7');">✕</button>
+                </div>
+                <h4 class="gift-card-title">Better Together →</h4>
+                <p class="gift-card-msg">“Same chaos, better together. Whatever storm comes, we face it side by side.”</p>
+                <div class="gift-card-footer">
+                  <span class="gift-heart-glyph">♥</span>
+                  <span class="mono-meta">PROMISE</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-nav-action bp-footer-actions">
+          <button class="page-continue-btn" onclick="goToPage(9)">
+            Continue: 09 — The Last Page →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PAGE 9: 09 — THE LAST PAGE
+         ========================================== -->
+    <section id="page-9" class="page page-centered last-page-section">
+      <svg class="doodle doodle-flower" style="top: 8%; left: 4%;" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="4.5" fill="rgba(240, 225, 185, 0.5)" stroke="currentColor" stroke-width="1.2"/><path d="M25 20.5 C23 13 27 13 25 20.5 M29.5 25 C37 23 37 27 29.5 25 M25 29.5 C27 37 23 37 25 29.5 M20.5 25 C13 27 13 23 20.5 25 M28.5 21.5 C35 16 32 13 28.5 21.5 M28.5 28.5 C35 34 32 37 28.5 28.5 M21.5 28.5 C15 34 18 37 21.5 28.5 M21.5 21.5 C15 16 18 13 21.5 21.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="rgba(232, 201, 204, 0.2)"/></svg>
+      <svg class="doodle doodle-tulip" style="top: 7%; right: 4%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M20 56 L20 32" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M20 44 Q28 40 32 30" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M20 32 C12 28 10 18 16 12 C18 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M20 32 C28 28 30 18 24 12 C22 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M16 16 C18 10 20 6 20 6 C20 6 22 10 24 16 Z" fill="rgba(185, 133, 140, 0.4)" stroke="currentColor" stroke-width="1.2"/></svg>
+      <svg class="doodle doodle-sparkles" style="top: 36%; right: 4%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 Q20 20 36 20 Q20 20 20 36 Q20 20 4 20 Q20 20 20 4 Z" fill="rgba(232, 201, 204, 0.3)" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="32" cy="30" r="1.2" fill="currentColor"/></svg>
+      <svg class="doodle doodle-heart" style="top: 48%; left: 3%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 33 C18 31 6 22 6 14 C6 8.5 10.5 5 15.5 5 C17.8 5 19.3 6.2 20 7.5 C20.7 6.2 22.2 5 24.5 5 C29.5 5 34 8.5 34 14 C34 22 22 31 20 33 Z" stroke="currentColor" stroke-width="1.3" fill="rgba(232, 201, 204, 0.25)" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg class="doodle doodle-bow" style="bottom: 28%; right: 4%;" viewBox="0 0 50 35" aria-hidden="true"><ellipse cx="25" cy="14" rx="3.5" ry="3" fill="currentColor"/><path d="M21 14 C12 6 6 12 12 18 C17 22 21 16 21 14 Z" stroke="currentColor" stroke-width="1.2" fill="rgba(232, 201, 204, 0.25)"/><path d="M29 14 C38 6 44 12 38 18 C33 22 29 16 29 14 Z" stroke="currentColor" stroke-width="1.2" fill="rgba(232, 201, 204, 0.25)"/><path d="M23 17 Q17 26 14 30 M27 17 Q33 26 36 30" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <svg class="doodle doodle-stars" style="bottom: 20%; left: 4%;" viewBox="0 0 45 45" aria-hidden="true"><path d="M22 6 L24 16 L34 18 L24 20 L22 30 L20 20 L10 18 L20 16 Z" fill="rgba(242, 199, 121, 0.35)" stroke="#C29D45" stroke-width="1.1"/><circle cx="36" cy="10" r="1.4" fill="currentColor"/><circle cx="10" cy="34" r="1.6" fill="currentColor"/></svg>
+      <svg class="doodle doodle-cup" style="bottom: 12%; right: 4%;" viewBox="0 0 50 50" aria-hidden="true"><path d="M12 20 L15 42 C15 45 35 45 35 42 L38 20 Z" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linejoin="round"/><path d="M37 24 C43 24 43 34 36 34" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/><path d="M22 14 Q20 10 22 6 M28 14 Q30 10 28 6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" fill="none"/><ellipse cx="25" cy="20" rx="13" ry="2.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+      <svg class="doodle doodle-candle" style="bottom: 8%; left: 4%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M14 26 C14 24 26 24 26 26 L26 54 C26 56 14 56 14 54 Z" stroke="currentColor" fill="none" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="20" cy="26" rx="6" ry="2" stroke="currentColor" fill="none" stroke-width="1.2"/><path d="M20 24 L20 18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M20 18 C17 14 17 8 20 5 C23 8 23 14 20 18 Z" fill="rgba(242, 199, 121, 0.45)" stroke="#C29D45" stroke-width="1.2"/><path d="M12 36 Q10 40 12 44" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/></svg>
+      <div class="section-container narrow">
+        <header class="section-header">
+          <span class="chapter-mono">09 — THE LAST PAGE</span>
+          <h2 class="section-title">Whatever happens next...</h2>
+        </header>
+
+        <!-- Architectural Blueprint Letter (Light Paper Palette) -->
+        <div class="lp-blueprint-card">
+          <!-- Drafting Crosshairs -->
+          <div class="lp-crosshair lp-ch-tl" aria-hidden="true">+</div>
+          <div class="lp-crosshair lp-ch-tr" aria-hidden="true">+</div>
+          <div class="lp-crosshair lp-ch-bl" aria-hidden="true">+</div>
+          <div class="lp-crosshair lp-ch-br" aria-hidden="true">+</div>
+
+          <!-- Card Header & Metadata -->
+          <div class="lp-card-header">
+            <span class="mono-meta lp-module-tag">SPECIFICATION · FINAL ARCHIVE</span>
+            <span class="mono-meta lp-date-stamp">09 / 14</span>
+          </div>
+
+          <!-- Section 09.01: The Unwritten Paths -->
+          <div class="lp-section-block">
+            <div class="lp-sub-kicker">
+              <span class="lp-num-badge">09.01</span>
+              <span class="lp-kicker-text mono-meta">POSSIBILITIES</span>
+            </div>
+
+            <div class="lp-three-paths">
+              <div class="lp-path-item">
+                <span class="lp-path-idx">01</span>
+                <p class="lp-path-p">Maybe we find our way back to each other.</p>
+              </div>
+              <div class="lp-path-item">
+                <span class="lp-path-idx">02</span>
+                <p class="lp-path-p">Maybe we become a beautiful memory.</p>
+              </div>
+              <div class="lp-path-item">
+                <span class="lp-path-idx">03</span>
+                <p class="lp-path-p">Maybe life surprises both of us.</p>
+              </div>
+            </div>
+
+            <div class="lp-honest-admission">
+              <p class="lp-lead-italic">I don't know where this story goes from here.</p>
+              <p class="lp-lead-muted">And for once, I don't want to pretend that I do.</p>
+            </div>
+          </div>
+
+          <!-- Section 09.02: The Core Truth (Highlighted Statement) -->
+          <div class="lp-section-block lp-truth-block">
+            <div class="lp-sub-kicker">
+              <span class="lp-num-badge">09.02</span>
+              <span class="lp-kicker-text mono-meta">A MATTER OF HONESTY</span>
+            </div>
+
+            <p class="lp-prelude-text">I just wanted you to know what this meant to me.</p>
+
+            <!-- HIGHLIGHTED FOCAL MODULE -->
+            <div class="lp-highlight-box">
+              <div class="lp-hl-tape" aria-hidden="true"></div>
+
+              <!-- Part 1: Uncertainty -->
+              <div class="lp-hl-row lp-hl-doubt">
+                <div class="lp-hl-meta">
+                  <span class="lp-hl-status mono-meta">STATEMENT A · UNCERTAIN</span>
+                  <span class="lp-hl-node">○</span>
+                </div>
+                <p class="lp-hl-text lp-doubt-text">“i 'm not sure that do you need me in your life anymore or not...”</p>
+              </div>
+
+              <!-- Architectural divider with converging lines and diamond node -->
+              <div class="lp-hl-divider" aria-hidden="true">
+                <div class="lp-hl-line"></div>
+                <div class="lp-hl-diamond">✦</div>
+                <div class="lp-hl-line"></div>
+              </div>
+
+              <!-- Part 2: Certainty (Highlighted) -->
+              <div class="lp-hl-row lp-hl-certainty">
+                <div class="lp-hl-meta">
+                  <span class="lp-hl-status accent mono-meta">STATEMENT B · ABSOLUTE</span>
+                  <span class="lp-hl-node accent">●</span>
+                </div>
+                <p class="lp-hl-text lp-truth-text">“...But I'm damn sure I need you.”</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 09.03: Closing & Final Salute -->
+          <div class="lp-section-block lp-closing-block">
+            <p class="lp-final-salute">Thank you for being part of my life.</p>
+
+            <!-- Architectural Drafting Visual (Light paper palette) -->
+            <div class="lp-draft-visual" aria-hidden="true">
+              <svg class="lp-draft-svg" viewBox="0 0 640 60" preserveAspectRatio="xMidYMid meet">
+                <line x1="20" y1="30" x2="280" y2="30" stroke="rgba(194, 157, 69, 0.45)" stroke-width="1.2" />
+                <line x1="280" y1="30" x2="360" y2="30" stroke="rgba(194, 157, 69, 0.45)" stroke-width="1" stroke-dasharray="4 4" />
+                <line x1="360" y1="30" x2="620" y2="30" stroke="rgba(194, 157, 69, 0.45)" stroke-width="1.2" />
+                <circle cx="280" cy="30" r="3" fill="none" stroke="#C29D45" stroke-width="1.2" />
+                <circle cx="360" cy="30" r="3" fill="none" stroke="#C29D45" stroke-width="1.2" />
+                <line x1="120" y1="12" x2="120" y2="48" stroke="rgba(23, 21, 21, 0.12)" stroke-width="1" />
+                <line x1="520" y1="12" x2="520" y2="48" stroke="rgba(23, 21, 21, 0.12)" stroke-width="1" />
+              </svg>
+            </div>
+
+            <!-- Technical metadata specs -->
+            <div class="lp-technical-metadata">
+              <div class="lp-meta-col">
+                <span class="lp-meta-k mono-meta">DOCUMENT:</span>
+                <span class="lp-meta-v mono-meta">THE LAST PAGE</span>
+              </div>
+              <div class="lp-meta-col">
+                <span class="lp-meta-k mono-meta">INTENTION:</span>
+                <span class="lp-meta-v mono-meta">UNCONDITIONAL</span>
+              </div>
+              <div class="lp-meta-col">
+                <span class="lp-meta-k mono-meta">STATUS:</span>
+                <span class="lp-meta-v mono-meta">STILL TRUE</span>
+              </div>
+            </div>
+
+            <!-- Signature line with "your jagguu" -->
+            <div class="lp-signature-wrap">
+              <span class="lp-sign-lead mono-meta">ALWAYS,</span>
+              <span class="lp-sign-name">your jagguu</span>
+              <div class="lp-sign-seal">
+                <span class="mono-meta">J × B</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-nav-action bp-footer-actions" style="margin-top: 3.5rem;">
+          <button class="page-continue-btn" onclick="goToPage(10)">
+            Continue: 10 — A Quiet Question →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PAGE 10: 10 — THE QUESTION ARCHIVE (5 Sequential Questions)
+         ========================================== -->
+    <section id="page-10" class="page page-centered q-archive-page">
+      <svg class="doodle doodle-flower" style="top: 8%; left: 4%;" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="4.5" fill="rgba(240, 225, 185, 0.5)" stroke="currentColor" stroke-width="1.2"/><path d="M25 20.5 C23 13 27 13 25 20.5 M29.5 25 C37 23 37 27 29.5 25 M25 29.5 C27 37 23 37 25 29.5 M20.5 25 C13 27 13 23 20.5 25 M28.5 21.5 C35 16 32 13 28.5 21.5 M28.5 28.5 C35 34 32 37 28.5 28.5 M21.5 28.5 C15 34 18 37 21.5 28.5 M21.5 21.5 C15 16 18 13 21.5 21.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="rgba(232, 201, 204, 0.2)"/></svg>
+      <svg class="doodle doodle-tulip" style="top: 15%; right: 4%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M20 56 L20 32" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M20 44 Q28 40 32 30" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M20 32 C12 28 10 18 16 12 C18 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M20 32 C28 28 30 18 24 12 C22 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M16 16 C18 10 20 6 20 6 C20 6 22 10 24 16 Z" fill="rgba(185, 133, 140, 0.4)" stroke="currentColor" stroke-width="1.2"/></svg>
+      <svg class="doodle doodle-stars" style="bottom: 12%; left: 5%;" viewBox="0 0 45 45" aria-hidden="true"><path d="M22 6 L24 16 L34 18 L24 20 L22 30 L20 20 L10 18 L20 16 Z" fill="rgba(242, 199, 121, 0.35)" stroke="#C29D45" stroke-width="1.1"/><circle cx="36" cy="10" r="1.4" fill="currentColor"/><circle cx="10" cy="34" r="1.6" fill="currentColor"/></svg>
+      <svg class="doodle doodle-sparkles" style="bottom: 10%; right: 5%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 Q20 20 36 20 Q20 20 20 36 Q20 20 4 20 Q20 20 20 4 Z" fill="rgba(232, 201, 204, 0.3)" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="32" cy="30" r="1.2" fill="currentColor"/></svg>
+
+      <div class="q-archive-container">
+        <div class="q-stage" id="question-stage">
+          <!-- Rendered dynamically via JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PAGE 12: 12 — A TINY BLOOM
+         ========================================== -->
+    <section id="page-12" class="page page-centered">
+      <svg class="doodle doodle-sparkles" style="top: 7%; left: 4%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 Q20 20 36 20 Q20 20 20 36 Q20 20 4 20 Q20 20 20 4 Z" fill="rgba(232, 201, 204, 0.3)" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="32" cy="30" r="1.2" fill="currentColor"/></svg>
+      <svg class="doodle doodle-tulip" style="top: 7%; right: 4%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M20 56 L20 32" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M20 44 Q28 40 32 30" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M20 32 C12 28 10 18 16 12 C18 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M20 32 C28 28 30 18 24 12 C22 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M16 16 C18 10 20 6 20 6 C20 6 22 10 24 16 Z" fill="rgba(185, 133, 140, 0.4)" stroke="currentColor" stroke-width="1.2"/></svg>
+      <svg class="doodle doodle-sunflower" style="top: 30%; left: 4%;" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="7" fill="rgba(139, 94, 60, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M25 18 C23 10 27 10 25 18 M32 25 C40 23 40 27 32 25 M25 32 C27 40 23 40 25 32 M18 25 C10 27 10 23 18 25 M30 20 C37 14 34 11 30 20 M30 30 C37 36 34 39 30 30 M20 30 C13 36 16 39 20 30 M20 20 C13 14 16 11 20 20" stroke="#C29D45" stroke-width="1.3" stroke-linecap="round" fill="rgba(242, 199, 121, 0.3)"/></svg>
+      <svg class="doodle doodle-heart" style="top: 48%; right: 4%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 33 C18 31 6 22 6 14 C6 8.5 10.5 5 15.5 5 C17.8 5 19.3 6.2 20 7.5 C20.7 6.2 22.2 5 24.5 5 C29.5 5 34 8.5 34 14 C34 22 22 31 20 33 Z" stroke="currentColor" stroke-width="1.3" fill="rgba(232, 201, 204, 0.25)" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg class="doodle doodle-candle" style="bottom: 28%; left: 4%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M14 26 C14 24 26 24 26 26 L26 54 C26 56 14 56 14 54 Z" stroke="currentColor" fill="none" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="20" cy="26" rx="6" ry="2" stroke="currentColor" fill="none" stroke-width="1.2"/><path d="M20 24 L20 18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M20 18 C17 14 17 8 20 5 C23 8 23 14 20 18 Z" fill="rgba(242, 199, 121, 0.45)" stroke="#C29D45" stroke-width="1.2"/><path d="M12 36 Q10 40 12 44" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/></svg>
+      <svg class="doodle doodle-bow" style="bottom: 12%; right: 4%;" viewBox="0 0 50 35" aria-hidden="true"><ellipse cx="25" cy="14" rx="3.5" ry="3" fill="currentColor"/><path d="M21 14 C12 6 6 12 12 18 C17 22 21 16 21 14 Z" stroke="currentColor" stroke-width="1.2" fill="rgba(232, 201, 204, 0.25)"/><path d="M29 14 C38 6 44 12 38 18 C33 22 29 16 29 14 Z" stroke="currentColor" stroke-width="1.2" fill="rgba(232, 201, 204, 0.25)"/><path d="M23 17 Q17 26 14 30 M27 17 Q33 26 36 30" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <svg class="doodle doodle-flower" style="bottom: 8%; left: 5%;" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="4.5" fill="rgba(240, 225, 185, 0.5)" stroke="currentColor" stroke-width="1.2"/><path d="M25 20.5 C23 13 27 13 25 20.5 M29.5 25 C37 23 37 27 29.5 25 M25 29.5 C27 37 23 37 25 29.5 M20.5 25 C13 27 13 23 20.5 25 M28.5 21.5 C35 16 32 13 28.5 21.5 M28.5 28.5 C35 34 32 37 28.5 28.5 M21.5 28.5 C15 34 18 37 21.5 28.5 M21.5 21.5 C15 16 18 13 21.5 21.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="rgba(232, 201, 204, 0.2)"/></svg>
+
+      <div class="bloom-archive-wrapper">
+        <div class="bloom-pavilion-card">
+          <!-- Card Header & Badges -->
+          <div class="bloom-card-header">
+            <span class="bloom-badge mono-meta">🌻 SECTION 16 · A TINY MOMENT</span>
+            <span class="bloom-status-tag mono-meta">J × B · GARDEN ARCHIVE</span>
+          </div>
+
+          <!-- Editorial Title & Intimate Invitation -->
+          <div class="bloom-title-wrap">
+            <h3 class="bloom-title">
+              Before the final page...<br>
+              <em>help me make this bloom for you?</em> 🥺
+            </h3>
+            <p class="bloom-subtitle">Hold the watering can down to shower our flowers.</p>
+          </div>
+
+          <!-- Terrarium Glasshouse Frame -->
+          <div class="garden-interactive-box">
+            <div class="garden-sky-sparkles" aria-hidden="true">
+              <span class="g-sparkle s-left">✧</span>
+              <span class="g-sparkle s-right">✦</span>
+            </div>
+
+            <div class="blooming-flowers-canvas" id="blooming-flowers">
+              <div class="blooming-plant tulip-plant" id="game-tulip">
+                <div class="bloom-head">🌷</div>
+                <div class="bloom-stem"></div>
+                <div class="bloom-leaf leaf-left"></div>
+              </div>
+              <div class="blooming-plant sunflower-plant" id="game-sunflower">
+                <div class="bloom-head">🌻</div>
+                <div class="bloom-stem"></div>
+                <div class="bloom-leaf leaf-right"></div>
+              </div>
+            </div>
+            
+            <div class="garden-soil-line"></div>
+            <div class="water-stream" id="water-stream"></div>
+          </div>
+
+          <!-- Growth Progress Indicator Track -->
+          <div class="bloom-progress-bar-wrap" id="bloom-progress-track">
+            <div class="bloom-progress-bar" id="bloom-progress-fill"></div>
+          </div>
+
+          <!-- Watering Action Button -->
+          <div class="bloom-action-container">
+            <button class="water-action-btn" id="water-flowers-btn">
+              <span class="water-btn-icon">🚿</span>
+              <span class="water-btn-label">Hold to Water</span>
+            </button>
+          </div>
+
+          <!-- Revealed Reaction Box on 100% Bloom -->
+          <div class="int-reaction-box" id="int-reaction-bloom"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PAGE 13: 13 — TWILIGHT CONFESSION
+         ========================================== -->
+    <section id="page-13" class="page page-centered sunset-page">
+      <svg class="doodle doodle-candle" style="top: 6%; right: 4%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M14 26 C14 24 26 24 26 26 L26 54 C26 56 14 56 14 54 Z" stroke="currentColor" fill="none" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="20" cy="26" rx="6" ry="2" stroke="currentColor" fill="none" stroke-width="1.2"/><path d="M20 24 L20 18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M20 18 C17 14 17 8 20 5 C23 8 23 14 20 18 Z" fill="rgba(242, 199, 121, 0.45)" stroke="#C29D45" stroke-width="1.2"/><path d="M12 36 Q10 40 12 44" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/></svg>
+      <svg class="doodle doodle-sparkles" style="top: 8%; left: 4%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 Q20 20 36 20 Q20 20 20 36 Q20 20 4 20 Q20 20 20 4 Z" fill="rgba(232, 201, 204, 0.3)" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="32" cy="30" r="1.2" fill="currentColor"/></svg>
+      <svg class="doodle doodle-tulip" style="top: 32%; left: 4%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M20 56 L20 32" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M20 44 Q28 40 32 30" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M20 32 C12 28 10 18 16 12 C18 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M20 32 C28 28 30 18 24 12 C22 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M16 16 C18 10 20 6 20 6 C20 6 22 10 24 16 Z" fill="rgba(185, 133, 140, 0.4)" stroke="currentColor" stroke-width="1.2"/></svg>
+      <svg class="doodle doodle-stars" style="top: 45%; right: 4%;" viewBox="0 0 45 45" aria-hidden="true"><path d="M22 6 L24 16 L34 18 L24 20 L22 30 L20 20 L10 18 L20 16 Z" fill="rgba(242, 199, 121, 0.35)" stroke="#C29D45" stroke-width="1.1"/><circle cx="36" cy="10" r="1.4" fill="currentColor"/><circle cx="10" cy="34" r="1.6" fill="currentColor"/></svg>
+      <svg class="doodle doodle-bow" style="bottom: 35%; left: 3%;" viewBox="0 0 50 35" aria-hidden="true"><ellipse cx="25" cy="14" rx="3.5" ry="3" fill="currentColor"/><path d="M21 14 C12 6 6 12 12 18 C17 22 21 16 21 14 Z" stroke="currentColor" stroke-width="1.2" fill="rgba(232, 201, 204, 0.25)"/><path d="M29 14 C38 6 44 12 38 18 C33 22 29 16 29 14 Z" stroke="currentColor" stroke-width="1.2" fill="rgba(232, 201, 204, 0.25)"/><path d="M23 17 Q17 26 14 30 M27 17 Q33 26 36 30" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <svg class="doodle doodle-candle" style="bottom: 20%; right: 4%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M14 26 C14 24 26 24 26 26 L26 54 C26 56 14 56 14 54 Z" stroke="currentColor" fill="none" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="20" cy="26" rx="6" ry="2" stroke="currentColor" fill="none" stroke-width="1.2"/><path d="M20 24 L20 18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M20 18 C17 14 17 8 20 5 C23 8 23 14 20 18 Z" fill="rgba(242, 199, 121, 0.45)" stroke="#C29D45" stroke-width="1.2"/><path d="M12 36 Q10 40 12 44" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/></svg>
+      <svg class="doodle doodle-leaves" style="bottom: 12%; left: 4%;" viewBox="0 0 45 45" aria-hidden="true"><path d="M8 38 Q22 24 38 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/><path d="M20 26 Q14 20 16 14 Q22 18 20 26 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.1"/><path d="M26 20 Q32 14 34 8 Q28 12 26 20 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.1"/><path d="M28 28 Q34 26 38 20 Q30 22 28 28 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.1"/></svg>
+      <svg class="doodle doodle-heart" style="bottom: 8%; right: 5%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 33 C18 31 6 22 6 14 C6 8.5 10.5 5 15.5 5 C17.8 5 19.3 6.2 20 7.5 C20.7 6.2 22.2 5 24.5 5 C29.5 5 34 8.5 34 14 C34 22 22 31 20 33 Z" stroke="currentColor" stroke-width="1.3" fill="rgba(232, 201, 204, 0.25)" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+      <div class="section-container narrow">
+        <div class="twilight-confession-card">
+          <div class="candle-icon">🕯️</div>
+          <span class="mono-meta twilight-meta">TWILIGHT · WHAT I NEVER STOPPED FEELING</span>
+          
+          <div class="twilight-body">
+            <p class="twilight-lead">I know this website started as an apology.</p>
+            <p>Every word of accountability I wrote is real. I made mistakes, I hurt you, and I will never make excuses for the ways I let you down.</p>
+            <p>But before we finish this archive, I want to say the one thing that was never meant to fit inside a text message:</p>
+            
+            <div class="confession-highlight-box">
+              <p class="confession-text">
+                “I love you, Bhondu.<br>
+                I loved you then, I love you now, and loving you has been the most honest, beautiful thing my heart has ever known.”
+              </p>
+            </div>
+
+            <p>I don't say this to pressure you, and I don't say this to make you stay. I say this because whether our story continues or becomes a quiet memory, I want you to walk away knowing you were cherished completely.</p>
+          </div>
+
+          <div class="final-response-area">
+            <h4 class="response-title">What does your heart say right now?</h4>
+            
+            <div class="final-response-options" id="final-choice-options">
+              <button class="final-choice-btn" onclick="selectFinalChoice('I still have love for you 🌻')">
+                I still have love for you 🌻
+              </button>
+              <button class="final-choice-btn" onclick="selectFinalChoice('I need time, but I heard you 🤍')">
+                I need time, but I heard you 🤍
+              </button>
+              <button class="final-choice-btn special" onclick="toggleCustomAnswerBox()">
+                Let me write to you in my own words… ✍️
+              </button>
+            </div>
+
+            <!-- Custom Textarea Response -->
+            <div class="custom-response-box hidden" id="custom-response-box">
+              <textarea id="custom-answer-input" placeholder="Say whatever you want to say, Bhondu... I will read every single word."></textarea>
+              <button class="submit-custom-btn" onclick="submitCustomAnswer()">Save my note 💌</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PAGE 14: 14 — BEFORE YOU GO… (KEEPSAKE & LETTER)
+         ========================================== -->
+    <section id="page-14" class="page page-centered">
+      <svg class="doodle doodle-bow" style="top: 7%; left: 4%;" viewBox="0 0 50 35" aria-hidden="true"><ellipse cx="25" cy="14" rx="3.5" ry="3" fill="currentColor"/><path d="M21 14 C12 6 6 12 12 18 C17 22 21 16 21 14 Z" stroke="currentColor" stroke-width="1.2" fill="rgba(232, 201, 204, 0.25)"/><path d="M29 14 C38 6 44 12 38 18 C33 22 29 16 29 14 Z" stroke="currentColor" stroke-width="1.2" fill="rgba(232, 201, 204, 0.25)"/><path d="M23 17 Q17 26 14 30 M27 17 Q33 26 36 30" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <svg class="doodle doodle-sunflower" style="top: 7%; right: 4%;" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="7" fill="rgba(139, 94, 60, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M25 18 C23 10 27 10 25 18 M32 25 C40 23 40 27 32 25 M25 32 C27 40 23 40 25 32 M18 25 C10 27 10 23 18 25 M30 20 C37 14 34 11 30 20 M30 30 C37 36 34 39 30 30 M20 30 C13 36 16 39 20 30 M20 20 C13 14 16 11 20 20" stroke="#C29D45" stroke-width="1.3" stroke-linecap="round" fill="rgba(242, 199, 121, 0.3)"/></svg>
+      <svg class="doodle doodle-flower" style="top: 30%; left: 4%;" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="4.5" fill="rgba(240, 225, 185, 0.5)" stroke="currentColor" stroke-width="1.2"/><path d="M25 20.5 C23 13 27 13 25 20.5 M29.5 25 C37 23 37 27 29.5 25 M25 29.5 C27 37 23 37 25 29.5 M20.5 25 C13 27 13 23 20.5 25 M28.5 21.5 C35 16 32 13 28.5 21.5 M28.5 28.5 C35 34 32 37 28.5 28.5 M21.5 28.5 C15 34 18 37 21.5 28.5 M21.5 21.5 C15 16 18 13 21.5 21.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="rgba(232, 201, 204, 0.2)"/></svg>
+      <svg class="doodle doodle-candle" style="top: 48%; right: 4%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M14 26 C14 24 26 24 26 26 L26 54 C26 56 14 56 14 54 Z" stroke="currentColor" fill="none" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="20" cy="26" rx="6" ry="2" stroke="currentColor" fill="none" stroke-width="1.2"/><path d="M20 24 L20 18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M20 18 C17 14 17 8 20 5 C23 8 23 14 20 18 Z" fill="rgba(242, 199, 121, 0.45)" stroke="#C29D45" stroke-width="1.2"/><path d="M12 36 Q10 40 12 44" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/></svg>
+      <svg class="doodle doodle-heart" style="bottom: 30%; left: 4%;" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 33 C18 31 6 22 6 14 C6 8.5 10.5 5 15.5 5 C17.8 5 19.3 6.2 20 7.5 C20.7 6.2 22.2 5 24.5 5 C29.5 5 34 8.5 34 14 C34 22 22 31 20 33 Z" stroke="currentColor" stroke-width="1.3" fill="rgba(232, 201, 204, 0.25)" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg class="doodle doodle-cup" style="bottom: 15%; right: 4%;" viewBox="0 0 50 50" aria-hidden="true"><path d="M12 20 L15 42 C15 45 35 45 35 42 L38 20 Z" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linejoin="round"/><path d="M37 24 C43 24 43 34 36 34" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/><path d="M22 14 Q20 10 22 6 M28 14 Q30 10 28 6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" fill="none"/><ellipse cx="25" cy="20" rx="13" ry="2.5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+      <svg class="doodle doodle-stars" style="bottom: 12%; left: 4%;" viewBox="0 0 45 45" aria-hidden="true"><path d="M22 6 L24 16 L34 18 L24 20 L22 30 L20 20 L10 18 L20 16 Z" fill="rgba(242, 199, 121, 0.35)" stroke="#C29D45" stroke-width="1.1"/><circle cx="36" cy="10" r="1.4" fill="currentColor"/><circle cx="10" cy="34" r="1.6" fill="currentColor"/></svg>
+      <svg class="doodle doodle-tulip" style="bottom: 8%; right: 4%;" viewBox="0 0 40 60" aria-hidden="true"><path d="M20 56 L20 32" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M20 44 Q28 40 32 30" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M20 32 C12 28 10 18 16 12 C18 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M20 32 C28 28 30 18 24 12 C22 18 20 24 20 32 Z" fill="rgba(232, 201, 204, 0.35)" stroke="currentColor" stroke-width="1.2"/><path d="M16 16 C18 10 20 6 20 6 C20 6 22 10 24 16 Z" fill="rgba(185, 133, 140, 0.4)" stroke="currentColor" stroke-width="1.2"/></svg>
+      <div class="section-container narrow">
+        <div class="keepsake-card" id="keepsake-card">
+          <div class="polaroid-corner-heart" aria-hidden="true" title="treasured forever">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </div>
+          <div class="keepsake-header">
+            <span class="mono-meta">BHONDU ARCHIVE · KEEPSAKE RECEIPT</span>
+            <h3>J × B · What Remains</h3>
+            <div class="keepsake-date mono-meta" id="receipt-date">[TODAY'S DATE]</div>
+          </div>
+
+          <div class="keepsake-divider"></div>
+
+          <div class="keepsake-item">
+            <span class="k-label mono-meta">WHAT YOU REMEMBERED</span>
+            <p class="k-value" id="k-ans-1">The late-night calls & laughter 🌙</p>
+          </div>
+
+          <div class="keepsake-item">
+            <span class="k-label mono-meta">WHAT WE WERE</span>
+            <p class="k-value" id="k-ans-2">Home.</p>
+          </div>
+
+          <div class="keepsake-item">
+            <span class="k-label mono-meta">WHAT WAS LEFT UNFINISHED</span>
+            <p class="k-value" id="k-ans-5">The promise to always find our way back.</p>
+          </div>
+
+          <div class="keepsake-item highlight">
+            <span class="k-label mono-meta">WHERE YOUR HEART STANDS</span>
+            <p class="k-value big" id="k-ans-final">Listening</p>
+          </div>
+
+          <div class="keepsake-divider"></div>
+
+          <div class="keepsake-footer">
+            <p class="screenshot-prompt">📸 Screenshot this card and send it to me when you feel ready. 🌻</p>
+            <div class="flower-stamp-pair">🌷 🌻</div>
+          </div>
+        </div>
+
+        <div class="after-keepsake-actions">
+          <button class="before-you-go-btn" id="before-you-go-trigger" onclick="openFinalModal()">
+            Before you go… (Final Letter)
+          </button>
+          <div style="margin-top: 1.5rem;">
+            <button class="icon-btn" onclick="goToPage(0)">
+              ↺ Start from Cover
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================
+       FINAL "BEFORE YOU GO..." MODAL (Section 28-29)
+       ========================================== -->
+  <div class="modal-backdrop" id="final-modal-backdrop" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="paper-modal-sheet">
+        <div class="modal-tape" aria-hidden="true"></div>
+
+        <header class="modal-header">
+          <span class="mono-meta modal-stamp">A FINAL REFLECTION</span>
+          <h2 class="modal-heading" id="modal-title">Before you go…</h2>
+        </header>
+
+        <!-- Exact Approved Verbatim Body -->
+        <div class="modal-body-content">
+          <p>Before you make your final decision to leave, I want to ask you to do one last thing for me.</p>
+          <p>Think about all the beautiful moments we shared.</p>
+          <p>Read my old letters.</p>
+          <p>Remember the promises we made.</p>
+          <p>Look at the little things we planned for the future.</p>
+          <p>Remember why we began.</p>
+          <p>Remember the love.</p>
+          <p class="modal-strong">Remember us.</p>
+          <p>Not because I want to force you to stay.</p>
+          <p>Not because I want to make you feel guilty for leaving.</p>
+          <p>Just because before we let something this meaningful become a memory, I want you to look at the whole story — not only the difficult parts, but everything that existed between them.</p>
+          <p>And if, after remembering all of that, your heart still tells you that leaving is what you truly need…</p>
+          <p>If you still believe that our paths are better apart…</p>
+          <p class="modal-peace">Then I will respect that.</p>
+          <p>Because loving someone also means having the courage to let them choose what is right for their heart, even when that choice hurts you.</p>
+          <p>So if your heart truly asks you to go, I won't hold you back.</p>
+          <p class="modal-ending">I'll let you have what your heart says.</p>
+        </div>
+
+        <footer class="modal-footer">
+          <button class="modal-close-btn" id="final-modal-close" onclick="closeFinalModal()" aria-label="Close reflection modal">
+            CLOSE
+          </button>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       LETTER OVERLAY MODAL (For reading archive letters)
+       ========================================== -->
+  <div class="modal-backdrop" id="letter-modal-backdrop" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="letter-modal-title">
+      <div class="paper-modal-sheet letter-sheet">
+        <header class="modal-header">
+          <span class="mono-meta modal-stamp" id="letter-modal-date">[DATE]</span>
+          <h2 class="modal-heading" id="letter-modal-title">Letter Title</h2>
+        </header>
+        <div class="modal-body-content" id="letter-modal-content">
+          <!-- Populated dynamically -->
+        </div>
+        <footer class="modal-footer">
+          <button class="modal-close-btn" id="letter-modal-close">CLOSE LETTER</button>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <!-- Minimal Personal Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">BHONDU</div>
+      <div class="footer-initials">J × B</div>
+      <p class="footer-note mono-meta">Some things were never meant to fit inside a message.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
