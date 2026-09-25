@@ -738,18 +738,21 @@ function attachPlayerEventListeners(day, note) {
       audioEnded();
     });
 
-    let hasTriedAlternate = false;
-    audio.addEventListener('error', () => {
-      if (!hasTriedAlternate) {
-        hasTriedAlternate = true;
-        if (audio.src.endsWith('.mp3')) {
-          audio.src = audio.src.replace(/\.mp3$/, '.mpeg');
-          return;
-        } else if (audio.src.endsWith('.mpeg')) {
-          audio.src = audio.src.replace(/\.mpeg$/, '.mp3');
-          return;
-        }
-      }
+    audio.addEventListener('waiting', () => {
+      if (card) card.classList.add('is-buffering');
+    });
+
+    audio.addEventListener('playing', () => {
+      if (card) card.classList.remove('is-buffering');
+    });
+
+    audio.addEventListener('canplay', () => {
+      if (card) card.classList.remove('is-buffering');
+    });
+
+    audio.addEventListener('error', (e) => {
+      console.warn('Voice note audio load error:', audio.src, e);
+      if (card) card.classList.remove('is-buffering');
       if (errorBanner) errorBanner.classList.remove('hidden');
       audioEnded();
     });
