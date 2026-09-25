@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 160" width="100" height="160" fill="none" stroke="currentColor">
+  <!-- Delicate Pressed Sunflower Botanical Drawing -->
+  <path d="M50,155 C50,130 52,100 50,75" stroke="#716B67" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- Leaf -->
+  <path d="M50,118 C30,105 22,88 28,72 C35,84 45,98 50,102" fill="rgba(240, 225, 185, 0.4)" stroke="#A68B52" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M50,132 C68,120 74,102 70,88 C62,100 54,112 50,118" fill="rgba(240, 225, 185, 0.4)" stroke="#A68B52" stroke-width="1.2" stroke-linecap="round"/>
+  <!-- Radiating Petals -->
+  <g stroke="#C29D45" stroke-width="1.1" fill="rgba(247, 228, 178, 0.6)">
+    <!-- Top / Bottom / Sides -->
+    <path d="M50,75 C47,60 45,40 50,30 C55,40 53,60 50,75 Z"/>
+    <path d="M50,75 C62,72 82,70 92,75 C82,80 62,78 50,75 Z"/>
+    <path d="M50,75 C53,90 55,110 50,120 C45,110 47,90 50,75 Z"/>
+    <path d="M50,75 C38,78 18,80 8,75 C18,70 38,72 50,75 Z"/>
+    <!-- Diagonals -->
+    <path d="M50,75 C58,63 76,50 83,43 C76,57 63,69 50,75 Z"/>
+    <path d="M50,75 C63,81 76,93 83,107 C76,100 58,87 50,75 Z"/>
+    <path d="M50,75 C42,87 24,100 17,107 C24,93 37,81 50,75 Z"/>
+    <path d="M50,75 C37,69 24,57 17,43 C24,50 42,63 50,75 Z"/>
+  </g>
+  <!-- Center disk with stippling -->
+  <circle cx="50" cy="75" r="14" fill="#3D3836" stroke="#171515" stroke-width="1.2"/>
+  <circle cx="50" cy="75" r="11" fill="none" stroke="rgba(247, 228, 178, 0.5)" stroke-width="0.8" stroke-dasharray="2,2"/>
+  <circle cx="50" cy="75" r="6" fill="none" stroke="rgba(247, 228, 178, 0.4)" stroke-width="0.8" stroke-dasharray="1.5,1.5"/>
+</svg>

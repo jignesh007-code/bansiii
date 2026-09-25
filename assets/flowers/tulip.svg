@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 160" width="100" height="160" fill="none" stroke="currentColor">
+  <!-- Delicate Pressed Tulip Botanical Drawing -->
+  <path d="M50,155 C50,120 48,95 50,60" stroke="#716B67" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- Leaves with soft blush wash -->
+  <path d="M50,125 C30,110 20,85 24,65 C32,78 45,95 50,105" fill="rgba(232, 201, 204, 0.35)" stroke="#B9858C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M50,110 C70,95 78,75 75,55 C68,70 56,88 50,95" fill="rgba(232, 201, 204, 0.35)" stroke="#B9858C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Tulip Petals -->
+  <path d="M50,62 C32,58 25,38 38,15 C45,28 50,42 50,62 Z" fill="rgba(232, 201, 204, 0.6)" stroke="#B9858C" stroke-width="1.4" stroke-linejoin="round"/>
+  <path d="M50,62 C68,58 75,38 62,15 C55,28 50,42 50,62 Z" fill="rgba(232, 201, 204, 0.6)" stroke="#B9858C" stroke-width="1.4" stroke-linejoin="round"/>
+  <path d="M42,45 C44,22 50,8 50,8 C50,8 56,22 58,45 C54,55 46,55 42,45 Z" fill="rgba(185, 133, 140, 0.75)" stroke="#9B6B72" stroke-width="1.2"/>
+</svg>
