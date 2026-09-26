@@ -470,13 +470,12 @@ const voiceNotes = {
     audio: "assets/voice/day-04.mp3",
     duration: "01:22",
     description: "Just one day left for your surprise."
-
-    5: {
+  },
+  5: {
     date: "2026-09-26",
     audio: "assets/voice/day-05.mp3",
-    duration: "02:10", 
-    description: Your surprise is finally done i hope you see it"
-  },
+    duration: "02:10",
+    description: "Your surprise is finally done i hope you see it"
   }
 };
 
@@ -491,7 +490,7 @@ const UNRECORDED_MESSAGES = [
 
 let currentVnAudio = null;
 let currentVnPlayingDay = null;
-let selectedVnDay = 4;
+let selectedVnDay = (CURRENT_JOURNAL_DAY && voiceNotes[CURRENT_JOURNAL_DAY]) ? CURRENT_JOURNAL_DAY : (Object.keys(voiceNotes).length ? Math.max(...Object.keys(voiceNotes).map(Number)) : 1);
 let unrecordedPopoverTimeout = null;
 
 function getDayDate(dayIndex) {
@@ -772,9 +771,42 @@ function attachPlayerEventListeners(day, note) {
       if (card) card.classList.remove('is-buffering');
     });
 
+    let fallbackAttempted = false;
     audio.addEventListener('error', (e) => {
+      if (!fallbackAttempted) {
+        fallbackAttempted = true;
+        audio._fallbackRecovering = true;
+        const filename = audio.src.split('/').pop().split('?')[0];
+        const wantsToPlay = card && card.classList.contains('is-playing');
+
+        if (audio.src.includes('assets/voice/')) {
+          console.log('[VoiceNote] Not found in assets/voice/, trying root fallback:', filename);
+          audio.src = filename;
+        } else {
+          console.log('[VoiceNote] Not found in root, trying assets/voice/ fallback:', filename);
+          audio.src = 'assets/voice/' + filename;
+        }
+        audio.load();
+        if (wantsToPlay) {
+          audio.play().then(() => {
+            audio._fallbackRecovering = false;
+          }).catch(err => {
+            console.warn('[VoiceNote] Fallback play error:', err);
+            audio._fallbackRecovering = false;
+          });
+        } else {
+          audio._fallbackRecovering = false;
+        }
+        return;
+      }
+      audio._fallbackRecovering = false;
       console.warn('Voice note audio load error:', audio.src, e);
-      if (card) card.classList.remove('is-buffering');
+      if (card) {
+        card.classList.remove('is-buffering');
+        card.classList.remove('is-playing');
+      }
+      if (playIcon) playIcon.classList.remove('hidden');
+      if (pauseIcon) pauseIcon.classList.add('hidden');
       if (errorBanner) errorBanner.classList.remove('hidden');
       audioEnded();
     });
@@ -805,17 +837,25 @@ function attachPlayerEventListeners(day, note) {
       }
       pauseAmbientAudio();
 
+      if (card) card.classList.add('is-playing');
+      if (playIcon) playIcon.classList.add('hidden');
+      if (pauseIcon) pauseIcon.classList.remove('hidden');
+      if (errorBanner) errorBanner.classList.add('hidden');
+
       const playPromise = currentVnAudio.play();
       if (playPromise !== undefined) {
-        playPromise.then(() => {
-          if (card) card.classList.add('is-playing');
-          if (playIcon) playIcon.classList.add('hidden');
-          if (pauseIcon) pauseIcon.classList.remove('hidden');
-          if (errorBanner) errorBanner.classList.add('hidden');
-        }).catch((err) => {
-          console.warn("Audio playback prevented or missing file:", err);
-          if (errorBanner) errorBanner.classList.remove('hidden');
-          audioEnded();
+        playPromise.catch((err) => {
+          console.warn("Audio playback retry or prevented:", err);
+          setTimeout(() => {
+            if (currentVnAudio && currentVnAudio.paused && !currentVnAudio._fallbackRecovering) {
+              if (card) card.classList.remove('is-playing');
+              if (playIcon) playIcon.classList.remove('hidden');
+              if (pauseIcon) pauseIcon.classList.add('hidden');
+              if (currentVnAudio.error && (!currentVnAudio.duration || isNaN(currentVnAudio.duration))) {
+                if (errorBanner) errorBanner.classList.remove('hidden');
+              }
+            }
+          }, 600);
         });
       }
     } else {
