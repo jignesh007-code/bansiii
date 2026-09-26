@@ -4920,29 +4920,41 @@ body.sunset-mode .sound-toggle {
   gap: 1.4rem;
   font-family: var(--font-serif);
   font-size: 1.25rem;
-  line-height: 1.7;
-  color: #D6CEC5;
+  line-height: 1.75;
+  color: #EDE7E1;
   text-align: left;
 }
 
+.twilight-body p {
+  color: #EDE7E1 !important;
+  font-family: var(--font-serif);
+  font-size: clamp(1.18rem, 2.5vw, 1.32rem);
+  line-height: 1.75;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.twilight-body p.twilight-lead,
 .twilight-lead {
-  font-size: 1.4rem;
-  color: #FFFFFF;
+  font-size: clamp(1.32rem, 3vw, 1.5rem) !important;
+  color: #FFFFFF !important;
   font-style: italic;
+  letter-spacing: 0.01em;
 }
 
 .confession-highlight-box {
-  background: rgba(232, 201, 204, 0.06);
-  border: 1px dashed rgba(232, 201, 204, 0.4);
+  background: rgba(232, 201, 204, 0.08);
+  border: 1px dashed rgba(232, 201, 204, 0.45);
   border-radius: 16px;
-  padding: 1.5rem 1.25rem;
+  padding: 1.6rem 1.35rem;
   margin: 0.5rem 0;
   text-align: center;
 }
 
-.confession-text {
-  font-size: 1.45rem;
-  color: #FFE6E9;
+.twilight-body .confession-highlight-box p,
+.confession-highlight-box .confession-text {
+  font-size: clamp(1.35rem, 3vw, 1.55rem) !important;
+  color: #FFE6E9 !important;
   font-style: italic;
   line-height: 1.6;
 }

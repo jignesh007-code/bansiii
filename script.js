@@ -152,6 +152,13 @@ function activatePage(pageNumber, el) {
       trackerTitle.textContent = questions[currentQuestionIndex].title;
     }
   }
+
+  // Ambient Track Switching:
+  // Pages 0 to 8: audio/music.mp3
+  // Pages 9 to 14: audio/janisar.mp3
+  if (typeof updateAmbientTrackForPage === 'function') {
+    updateAmbientTrackForPage(pageNumber);
+  }
 }
 
 function goPrevPage() {
@@ -418,7 +425,15 @@ function initArchive() {
    ========================================================================== */
 const JOURNAL_START_DATE = "2026-09-22";
 const TOTAL_DAYS = 14;
-const CURRENT_JOURNAL_DAY = 4;
+
+function getCalculatedJournalDay() {
+  const start = new Date(JOURNAL_START_DATE + "T00:00:00");
+  const now = new Date();
+  const diffTime = now.getTime() - start.getTime();
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+  return Math.min(TOTAL_DAYS, Math.max(1, diffDays));
+}
+const CURRENT_JOURNAL_DAY = getCalculatedJournalDay();
 
 /**
  * 14-Day Voice Journal Data Store
@@ -846,7 +861,12 @@ function showUnrecordedMessage(day, anchorElement) {
     clearTimeout(unrecordedPopoverTimeout);
   }
 
-  const msg = UNRECORDED_MESSAGES[(day - 1) % UNRECORDED_MESSAGES.length];
+  let msg;
+  if (typeof getCalculatedJournalDay === 'function' && day === getCalculatedJournalDay() && !voiceNotes[day]) {
+    msg = "I will upload today's note later today. 🎙️";
+  } else {
+    msg = UNRECORDED_MESSAGES[(day - 1) % UNRECORDED_MESSAGES.length];
+  }
   dayEl.textContent = `DAY ${String(day).padStart(2, '0')}`;
   msgEl.textContent = msg;
 
@@ -910,13 +930,24 @@ function initVoiceNotes() {
 }
 
 /* ==========================================================================
-   6. Ambient Background Music (Autoplay on Entry / First Touch & Smart Pause)
+   6. Ambient Background Music (Autoplay on Entry / First Touch & Smart Dual-Track)
+   Pages 0 to 8: audio/music.mp3
+   Pages 9 to 14: audio/janisar.mp3
    ========================================================================== */
+const AMBIENT_TRACK_1 = 'audio/music.mp3';
+const AMBIENT_TRACK_2 = 'audio/janisar.mp3';
+
 let ambientAudio = null;
 let soundToggle = null;
 let soundState = null;
 let userManuallyPaused = false;
 let wasAmbientPlayingBeforeVoiceNote = false;
+let currentAmbientTrackKey = 'track1';
+let ambientFadeInterval = null;
+
+function getTargetTrackForPage(pageNumber) {
+  return pageNumber >= 9 ? 'track2' : 'track1';
+}
 
 function initAmbientAudio() {
   ambientAudio = document.getElementById('ambient-audio');
@@ -924,6 +955,18 @@ function initAmbientAudio() {
   soundState = document.getElementById('sound-state');
 
   if (!soundToggle || !ambientAudio) return;
+
+  // Case-insensitive fallback if server hosts janisar.MP3
+  ambientAudio.addEventListener('error', () => {
+    if (ambientAudio.src && ambientAudio.src.includes('janisar.mp3')) {
+      console.warn('Retrying with uppercase janisar.MP3 fallback');
+      ambientAudio.src = 'audio/janisar.MP3';
+      ambientAudio.load();
+      if (!userManuallyPaused && !ambientAudio.paused) {
+        ambientAudio.play().catch(() => {});
+      }
+    }
+  });
 
   soundToggle.addEventListener('click', () => {
     if (ambientAudio.paused) {
@@ -947,8 +990,84 @@ function initAmbientAudio() {
   document.addEventListener('touchstart', startAudioOnFirstInteraction, { passive: true });
 }
 
+function updateAmbientTrackForPage(pageNumber) {
+  if (!ambientAudio) return;
+
+  const targetKey = getTargetTrackForPage(pageNumber);
+  if (targetKey === currentAmbientTrackKey) {
+    return; // Already playing/set to this track
+  }
+
+  currentAmbientTrackKey = targetKey;
+  const targetSrc = targetKey === 'track2' ? AMBIENT_TRACK_2 : AMBIENT_TRACK_1;
+  const isCurrentlyPlaying = !ambientAudio.paused && !userManuallyPaused;
+
+  if (ambientFadeInterval) {
+    clearInterval(ambientFadeInterval);
+    ambientFadeInterval = null;
+  }
+
+  if (isCurrentlyPlaying) {
+    // Smooth crossfade: fade out current track
+    let vol = ambientAudio.volume;
+    ambientFadeInterval = setInterval(() => {
+      vol = Math.max(0, vol - 0.15);
+      ambientAudio.volume = vol;
+      if (vol <= 0.05) {
+        clearInterval(ambientFadeInterval);
+        ambientFadeInterval = null;
+        ambientAudio.pause();
+        switchAmbientSrc(targetSrc, true);
+      }
+    }, 40);
+  } else {
+    // Silently update source so next un-mute starts the right track
+    switchAmbientSrc(targetSrc, false);
+  }
+}
+
+function switchAmbientSrc(newSrc, resumePlay) {
+  if (!ambientAudio) return;
+  ambientAudio.volume = 0;
+  ambientAudio.src = newSrc;
+  ambientAudio.load();
+
+  if (resumePlay) {
+    const playPromise = ambientAudio.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        if (soundToggle) soundToggle.classList.add('playing');
+        if (soundState) soundState.textContent = 'ON';
+        // Fade in new track smoothly
+        let vol = 0;
+        ambientFadeInterval = setInterval(() => {
+          vol = Math.min(1, vol + 0.1);
+          ambientAudio.volume = vol;
+          if (vol >= 1) {
+            clearInterval(ambientFadeInterval);
+            ambientFadeInterval = null;
+          }
+        }, 45);
+      }).catch(err => {
+        console.warn('Ambient switch play error:', err);
+      });
+    }
+  } else {
+    ambientAudio.volume = 1;
+  }
+}
+
 function playAmbientAudio() {
   if (!ambientAudio) return;
+  const targetKey = getTargetTrackForPage(currentPage);
+  const targetSrc = targetKey === 'track2' ? AMBIENT_TRACK_2 : AMBIENT_TRACK_1;
+
+  if (!ambientAudio.src || !ambientAudio.src.includes(targetSrc)) {
+    ambientAudio.src = targetSrc;
+    currentAmbientTrackKey = targetKey;
+  }
+  ambientAudio.volume = 1;
+
   const playPromise = ambientAudio.play();
   if (playPromise !== undefined) {
     playPromise.then(() => {
@@ -961,6 +1080,10 @@ function playAmbientAudio() {
 }
 
 function pauseAmbientAudio() {
+  if (ambientFadeInterval) {
+    clearInterval(ambientFadeInterval);
+    ambientFadeInterval = null;
+  }
   if (ambientAudio && !ambientAudio.paused) {
     ambientAudio.pause();
     if (soundToggle) soundToggle.classList.remove('playing');
