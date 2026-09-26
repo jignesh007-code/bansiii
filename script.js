@@ -469,7 +469,14 @@ const voiceNotes = {
     date: "2026-09-25",
     audio: "assets/voice/day-04.mp3",
     duration: "01:22",
-    description: "Making something special for you is finally done."
+    description: "Just one day left for your surprise."
+
+    5: {
+    date: "2026-09-26",
+    audio: "assets/voice/day-05.mp3",
+    duration: "02:10", 
+    description: Your surprise is finally done i hope you see it"
+  },
   }
 };
 
